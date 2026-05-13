@@ -451,6 +451,7 @@
         .ppt-actions {
             display: flex;
             gap: 12px;
+            flex-wrap: wrap;
         }
 
         .ppt-btn {
@@ -465,14 +466,189 @@
             transition: all 0.3s ease;
         }
 
-        .ppt-btn.download {
-            background: linear-gradient(135deg, #34d399, #10b981);
+        .ppt-btn.view {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
             color: #fff;
         }
 
-        .ppt-btn.download:hover {
+        .ppt-btn.view:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(52, 211, 153, 0.3);
+            box-shadow: 0 6px 16px rgba(96, 165, 250, 0.3);
+        }
+
+        .ppt-btn.download {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #94a3b8;
+        }
+
+        .ppt-btn.download:hover {
+            border-color: #34d399;
+            color: #34d399;
+            transform: translateY(-2px);
+        }
+
+        /* PPT Viewer Modal */
+        .ppt-viewer-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ppt-viewer-modal.active {
+            display: flex;
+        }
+
+        .ppt-viewer-content {
+            width: 95%;
+            height: 90%;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ppt-viewer-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .ppt-viewer-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ppt-viewer-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .ppt-viewer-tip {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+        }
+
+        .ppt-viewer-tip a {
+            color: #60a5fa;
+        }
+
+        /* Docx Section */
+        .docx-section {
+            padding: 40px 24px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .docx-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .docx-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            position: relative;
+        }
+
+        .docx-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .docx-card:hover {
+            border-color: rgba(251, 191, 36, 0.4);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px rgba(251, 191, 36, 0.1);
+        }
+
+        .docx-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .docx-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+
+        .docx-meta {
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+        }
+
+        .docx-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .docx-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .docx-btn.view {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #fff;
+        }
+
+        .docx-btn.view:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(251, 191, 36, 0.3);
+        }
+
+        .docx-btn.download {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #94a3b8;
+        }
+
+        .docx-btn.download:hover {
+            border-color: #fbbf24;
+            color: #fbbf24;
+            transform: translateY(-2px);
         }
 
         /* Footer */
@@ -642,14 +818,66 @@
                     <h3 class="ppt-title">StrucText-Eval</h3>
                     <div class="ppt-meta">PPTX · ~4.9MB</div>
                     <div class="ppt-actions">
+                        <button class="ppt-btn view" onclick="openPPTViewer('papers/StrucText-Eval.pptx')">
+                            👁️ 在线查看
+                        </button>
                         <a href="papers/StrucText-Eval.pptx" download class="ppt-btn download">
-                            ⬇️ 下载 PPT
+                            ⬇️ 下载
                         </a>
                     </div>
                 </div>
 
             </div>
         </section>
+
+        <section class="docx-section">
+            <div class="section-header">
+                <h2>📄 Word 文档</h2>
+                <p>相关论文的 Word 文档资料</p>
+            </div>
+
+            <div class="docx-grid">
+
+                <div class="docx-card">
+                    <div class="docx-icon">📄</div>
+                    <h3 class="docx-title">deepseekV4 技术文档</h3>
+                    <div class="docx-meta">DOCX · ~731KB</div>
+                    <div class="docx-actions">
+                        <button class="docx-btn view" onclick="openDOCXViewer('papers/deepseekV4.docx')">
+                            👁️ 在线查看
+                        </button>
+                        <a href="papers/deepseekV4.docx" download class="docx-btn download">
+                            ⬇️ 下载
+                        </a>
+                    </div>
+                </div>
+
+                <div class="docx-card">
+                    <div class="docx-icon">📄</div>
+                    <h3 class="docx-title">StrucText-Eval 文档</h3>
+                    <div class="docx-meta">DOCX · ~23KB</div>
+                    <div class="docx-actions">
+                        <button class="docx-btn view" onclick="openDOCXViewer('papers/StrucText-Eval.docx')">
+                            👁️ 在线查看
+                        </button>
+                        <a href="papers/StrucText-Eval.docx" download class="docx-btn download">
+                            ⬇️ 下载
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PPT Viewer Modal -->
+        <div class="ppt-viewer-modal" id="pptViewerModal">
+            <button class="ppt-viewer-close" onclick="closePPTViewer()">✕</button>
+            <div class="ppt-viewer-content" id="pptViewerContent">
+                <div class="ppt-viewer-tip">
+                    正在加载 PPT 预览...
+                </div>
+            </div>
+        </div>
 
         <section class="stats-section">
             <div class="stats-grid">
@@ -792,7 +1020,7 @@
                 });
             }, { threshold: 0.1 });
 
-            document.querySelectorAll('.paper-card, .ppt-card').forEach((card, index) => {
+            document.querySelectorAll('.paper-card, .ppt-card, .docx-card').forEach((card, index) => {
                 card.style.transitionDelay = `${index * 0.15}s`;
                 observer.observe(card);
             });
@@ -806,6 +1034,49 @@
                 });
             });
         })();
+
+        // ============ PPT Viewer ============
+        function openPPTViewer(pptPath) {
+            openOfficeViewer(pptPath);
+        }
+
+        // ============ DOCX Viewer ============
+        function openDOCXViewer(docxPath) {
+            openOfficeViewer(docxPath);
+        }
+
+        // 共用 Office Online 预览
+        function openOfficeViewer(filePath) {
+            const modal = document.getElementById('pptViewerModal');
+            const content = document.getElementById('pptViewerContent');
+
+            // 使用 Office Online 在线预览
+            const officeUrl = 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(window.location.origin + '/' + filePath);
+
+            content.innerHTML = `
+                <button class="ppt-viewer-close" onclick="closeOfficeViewer()">✕</button>
+                <iframe src="${officeUrl}" allow="fullscreen"></iframe>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeOfficeViewer() {
+            const modal = document.getElementById('pptViewerModal');
+            const content = document.getElementById('pptViewerContent');
+
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            content.innerHTML = '<div class="ppt-viewer-tip">正在加载预览...</div>';
+        }
+
+        // ESC 关闭
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeOfficeViewer();
+            }
+        });
     </script>
 
 </body>
