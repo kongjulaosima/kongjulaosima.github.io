@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 24px;
+        }
+
+        .hero {
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s ease forwards;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: #94a3b8;
+            margin-top: 20px;
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease 0.3s forwards;
+        }
+
+        .hero .cta {
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.6s forwards;
+        }
+
+        .hero .cta a {
+            display: inline-block;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .hero .cta a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(96, 165, 250, 0.4);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #64748b;
+            font-size: 0.85rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 50px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-content {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #cbd5e1;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .about-content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .stat-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #60a5fa;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            cursor: default;
+        }
+
+        .skill-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-card:hover {
+            border-color: #60a5fa;
+            transform: translateY(-5px) !important;
+            box-shadow: 0 8px 30px rgba(96, 165, 250, 0.15);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .skill-name {
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card:hover {
+            border-color: #a78bfa;
+            transform: translateY(-5px) !important;
+            box-shadow: 0 8px 30px rgba(167, 139, 250, 0.15);
+        }
+
+        .project-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: #e2e8f0;
+        }
+
+        .project-card p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .project-tags span {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+        }
+
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .contact-content p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .contact-content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease 0.2s;
+        }
+
+        .contact-links.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-links a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .contact-links a:hover {
+            border-color: #60a5fa;
+            background: rgba(96, 165, 250, 0.1);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #475569;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .nav-bar.show {
+            opacity: 1;
+        }
+
+        .nav-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #60a5fa;
+        }
+
+        @media (max-width: 640px) {
+            section { padding: 60px 16px; }
+            .stats { gap: 30px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar" id="navbar">
+        <span class="nav-logo">✦ Home</span>
+        <ul class="nav-links">
+            <li><a href="#about">关于</a></li>
+            <li><a href="#skills">技能</a></li>
+            <li><a href="#projects">项目</a></li>
+            <li><a href="#contact">联系</a></li>
+        </ul>
+    </nav>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="content">
+
+        <section class="hero" id="hero">
+            <h1>你好，我是开发者</h1>
+            <p>热爱编程，热衷于用代码创造美好的数字体验。专注于 Web 开发、人工智能与创意编程。</p>
+            <div class="cta">
+                <a href="#projects">探索项目</a>
+            </div>
+            <div class="scroll-indicator">
+                <span>向下滚动</span>
+                <span>↓</span>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2 class="section-title"><span>关于我</span></h2>
+            <div class="about-content">
+                <p>我是一名充满热情的全栈开发者，拥有丰富的 Web 应用开发和深度学习经验。</p>
+                <p>我相信技术的力量可以改变世界，始终保持好奇心和学习热情，探索前沿技术并应用于实际项目。</p>
+                <p>在工作之余，我喜欢参与开源项目、撰写技术博客，以及在各种编程社区中分享知识。</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">项目经验</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3+</div>
+                        <div class="stat-label">技术方向</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">学习热情</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2 class="section-title"><span>技术技能</span></h2>
+            <div class="skills-grid">
+                <div class="skill-card"><div class="skill-icon">⚛️</div><div class="skill-name">React</div></div>
+                <div class="skill-card"><div class="skill-icon">🟢</div><div class="skill-name">Node.js</div></div>
+                <div class="skill-card"><div class="skill-icon">📜</div><div class="skill-name">TypeScript</div></div>
+                <div class="skill-card"><div class="skill-icon">🎨</div><div class="skill-name">CSS/Canvas</div></div>
+                <div class="skill-card"><div class="skill-icon">🐍</div><div class="skill-name">Python</div></div>
+                <div class="skill-card"><div class="skill-icon">🤖</div><div class="skill-name">AI/ML</div></div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2 class="section-title"><span>项目展示</span></h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>智能数据分析平台</h3>
+                    <p>基于机器学习的数据分析平台，支持自动数据清洗、可视化和预测分析。</p>
+                    <div class="project-tags"><span>Python</span><span>React</span><span>TensorFlow</span></div>
+                </div>
+                <div class="project-card">
+                    <h3>实时协作白板</h3>
+                    <p>支持多人实时协作的在线白板应用，基于 WebSocket 实现毫秒级同步。</p>
+                    <div class="project-tags"><span>Node.js</span><span>Canvas</span><span>WebSocket</span></div>
+                </div>
+                <div class="project-card">
+                    <h3>创意粒子引擎</h3>
+                    <p>高性能 Web 粒子系统引擎，支持上万粒子的实时交互与物理模拟。</p>
+                    <div class="project-tags"><span>Canvas</span><span>WebGL</span><span>TypeScript</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2 class="section-title"><span>联系我</span></h2>
+            <div class="contact-content">
+                <p>如果你对我的项目感兴趣，或者有任何合作想法，欢迎随时联系我！</p>
+                <div class="contact-links">
+                    <a href="#">📧 Email</a>
+                    <a href="#">💻 GitHub</a>
+                    <a href="#">📱 微信</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            &copy; 2026 个人主页 · Built with ❤️
+        </footer>
+
+    </div>
+
+    <script>
+        (function() {
+
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouseX = -1000;
+            let mouseY = -1000;
+            let animationId = null;
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            function createParticles(count) {
+                particles = [];
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.6,
+                        vy: (Math.random() - 0.5) * 0.6,
+                        size: Math.random() * 2.5 + 1,
+                        alpha: Math.random() * 0.6 + 0.2,
+                        hue: Math.random() * 60 + 200
+                    });
+                }
+            }
+
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+
+                    const dx = mouseX - p.x;
+                    const dy = mouseY - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        const force = (150 - dist) / 150 * 0.5;
+                        p.vx -= (dx / dist) * force * 0.05;
+                        p.vy -= (dy / dist) * force * 0.05;
+                    }
+
+                    p.vx += (Math.random() - 0.5) * 0.02;
+                    p.vy += (Math.random() - 0.5) * 0.02;
+
+                    const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                    if (speed > 1.2) {
+                        p.vx = (p.vx / speed) * 1.2;
+                        p.vy = (p.vy / speed) * 1.2;
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${p.hue}, 70%, 65%, ${p.alpha})`;
+                    ctx.fill();
+                }
+
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = dx * dx + dy * dy;
+                        if (dist < 12000) {
+                            const alpha = (1 - dist / 12000) * 0.3;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
+                            ctx.lineWidth = 0.6;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                animationId = requestAnimationFrame(drawParticles);
+            }
+
+            function init() {
+                resize();
+                const count = Math.min(Math.floor(canvas.width * canvas.height / 8000), 120);
+                createParticles(count);
+                drawParticles();
+            }
+
+            window.addEventListener('resize', () => {
+                resize();
+                createParticles(Math.min(Math.floor(canvas.width * canvas.height / 8000), 120));
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            document.addEventListener('touchmove', (e) => {
+                const touch = e.touches[0];
+                mouseX = touch.clientX;
+                mouseY = touch.clientY;
+            }, { passive: true });
+
+            document.addEventListener('touchend', () => {
+                mouseX = -1000;
+                mouseY = -1000;
+            });
+
+            init();
+
+        })();
+
+        (function() {
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        if (entry.target.dataset.delay) {
+                            entry.target.style.transitionDelay = entry.target.dataset.delay;
+                        }
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.section-title, .about-content p, .stat-item, .skill-card, .project-card, .contact-content p, .contact-links').forEach(el => {
+                observer.observe(el);
+            });
+
+            const navbar = document.getElementById('navbar');
+            let heroDone = false;
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > window.innerHeight * 0.5) {
+                    if (!heroDone) {
+                        navbar.classList.add('show');
+                        heroDone = true;
+                    }
+                } else {
+                    if (heroDone) {
+                        navbar.classList.remove('show');
+                        heroDone = false;
+                    }
+                }
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(a.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        })();
+    </script>
+
+</body>
+</html>
