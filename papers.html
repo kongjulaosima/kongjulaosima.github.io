@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大模型论文学习</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        #grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(96, 165, 250, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(96, 165, 250, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #60a5fa;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 24px 60px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #60a5fa;
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .hero-badge span {
+            font-size: 1.2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Papers Section */
+        .papers-section {
+            padding: 40px 24px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        .papers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .paper-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 28px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .paper-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .paper-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .paper-card:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.1);
+        }
+
+        .paper-card:hover::before {
+            opacity: 1;
+        }
+
+        .paper-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.2));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .paper-card:hover .paper-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .paper-type {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .paper-type.ACL {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+
+        .paper-type.DeepSeek {
+            background: rgba(167, 139, 250, 0.15);
+            color: #a78bfa;
+        }
+
+        .paper-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .paper-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .paper-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .paper-desc {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .paper-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .paper-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .paper-btn.primary {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            color: #fff;
+        }
+
+        .paper-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(96, 165, 250, 0.3);
+        }
+
+        .paper-btn.secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+        }
+
+        .paper-btn.secondary:hover {
+            border-color: #60a5fa;
+            color: #60a5fa;
+            background: rgba(96, 165, 250, 0.1);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 40px 24px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #475569;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Floating elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .float-icon {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.1;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .float-icon:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .float-icon:nth-child(2) { top: 60%; right: 15%; animation-delay: -3s; }
+        .float-icon:nth-child(3) { bottom: 25%; left: 20%; animation-delay: -6s; }
+        .float-icon:nth-child(4) { top: 40%; right: 25%; animation-delay: -9s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .papers-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .hero { padding: 100px 16px 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="grid-bg"></div>
+    <canvas class="particles" id="particles"></canvas>
+
+    <div class="floating-elements">
+        <span class="float-icon">📄</span>
+        <span class="float-icon">🤖</span>
+        <span class="float-icon">📚</span>
+        <span class="float-icon">🔬</span>
+    </div>
+
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-logo">✦ Home</a>
+        <ul class="nav-links">
+            <li><a href="index.html">个人主页</a></li>
+            <li><a href="papers.html" class="active">大模型论文</a></li>
+            <li><a href="presentation.html">演示文稿</a></li>
+        </ul>
+    </nav>
+
+    <div class="content">
+
+        <section class="hero">
+            <div class="hero-badge">
+                <span>🤖</span>
+                <span>LLM Papers Collection</span>
+            </div>
+            <h1>大模型论文学习</h1>
+            <p>深入研究前沿大语言模型技术，包括 DeepSeek V4、ACL 会议论文等，涵盖架构创新、训练方法和应用实践。</p>
+        </section>
+
+        <section class="papers-section">
+            <div class="section-header">
+                <h2>📖 论文列表</h2>
+                <p>精选大模型领域高质量论文，持续更新中...</p>
+            </div>
+
+            <div class="papers-grid">
+
+                <div class="paper-card" data-delay="0.1">
+                    <div class="paper-icon">🔬</div>
+                    <span class="paper-type DeepSeek">DeepSeek</span>
+                    <h3 class="paper-title">DeepSeek V4 技术分析</h3>
+                    <div class="paper-meta">
+                        <span>📅 2025</span>
+                        <span>📄 PDF</span>
+                        <span>~1.3MB</span>
+                    </div>
+                    <p class="paper-desc">深入解析 DeepSeek V4 的技术创新，包括混合专家架构、FP8 训练优化、多令牌预测等核心突破，以及在推理能力上的显著提升。</p>
+                    <div class="paper-actions">
+                        <a href="ppt/deepseekV4技术点分析.pdf" target="_blank" class="paper-btn primary">
+                            📖 在线阅读
+                        </a>
+                        <a href="ppt/deepseekV4技术点分析.pdf" download class="paper-btn secondary">
+                            ⬇️ 下载
+                        </a>
+                    </div>
+                </div>
+
+                <div class="paper-card" data-delay="0.2">
+                    <div class="paper-icon">🚀</div>
+                    <span class="paper-type DeepSeek">DeepSeek</span>
+                    <h3 class="paper-title">DeepSeek V4 完整论文</h3>
+                    <div class="paper-meta">
+                        <span>📅 2025</span>
+                        <span>📄 PDF</span>
+                        <span>~4.5MB</span>
+                    </div>
+                    <p class="paper-desc">DeepSeek V4 原版论文，详细介绍模型的预训练方法、指令微调策略、部署优化以及在各类基准测试中的卓越表现。</p>
+                    <div class="paper-actions">
+                        <a href="ppt/DeepSeek_V4.pdf" target="_blank" class="paper-btn primary">
+                            📖 在线阅读
+                        </a>
+                        <a href="ppt/DeepSeek_V4.pdf" download class="paper-btn secondary">
+                            ⬇️ 下载
+                        </a>
+                    </div>
+                </div>
+
+                <div class="paper-card" data-delay="0.3">
+                    <div class="paper-icon">📝</div>
+                    <span class="paper-type ACL">ACL 2025</span>
+                    <h3 class="paper-title">ACL Long Papers 2025</h3>
+                    <div class="paper-meta">
+                        <span>📅 2025</span>
+                        <span>📄 PDF</span>
+                        <span>~2.1MB</span>
+                    </div>
+                    <p class="paper-desc">ACL 2025 会议长论文集，收录自然语言处理领域的最新研究成果，涵盖文本生成、机器翻译、问答系统等前沿课题。</p>
+                    <div class="paper-actions">
+                        <a href="pdf/2025.acl-long.11.pdf" target="_blank" class="paper-btn primary">
+                            📖 在线阅读
+                        </a>
+                        <a href="pdf/2025.acl-long.11.pdf" download class="paper-btn secondary">
+                            ⬇️ 下载
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">论文数量</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🤖</div>
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">模型系列</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-number">2025</div>
+                    <div class="stat-label">最新年份</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            &copy; 2026 大模型论文学习 · 持续更新中 · Built with ❤️
+        </footer>
+
+    </div>
+
+    <script>
+        // ============ Particle Animation ============
+        (function() {
+            const canvas = document.getElementById('particles');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouseX = -1000;
+            let mouseY = -1000;
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            function createParticles(count) {
+                particles = [];
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.4,
+                        vy: (Math.random() - 0.5) * 0.4,
+                        size: Math.random() * 2 + 0.5,
+                        alpha: Math.random() * 0.5 + 0.1,
+                        hue: Math.random() * 40 + 220
+                    });
+                }
+            }
+
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = canvas.width;
+                    if (p.x > canvas.width) p.x = 0;
+                    if (p.y < 0) p.y = canvas.height;
+                    if (p.y > canvas.height) p.y = 0;
+
+                    // Mouse interaction
+                    const dx = mouseX - p.x;
+                    const dy = mouseY - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        p.vx -= (dx / dist) * 0.02;
+                        p.vy -= (dy / dist) * 0.02;
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, ${p.alpha})`;
+                    ctx.fill();
+                }
+
+                // Draw connections
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = dx * dx + dy * dy;
+                        if (dist < 10000) {
+                            const alpha = (1 - dist / 10000) * 0.2;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(96, 165, 250, ${alpha})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                requestAnimationFrame(drawParticles);
+            }
+
+            function init() {
+                resize();
+                createParticles(Math.min(Math.floor(canvas.width * canvas.height / 10000), 80));
+                drawParticles();
+            }
+
+            window.addEventListener('resize', () => {
+                resize();
+                createParticles(Math.min(Math.floor(canvas.width * canvas.height / 10000), 80));
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            document.addEventListener('mouseleave', () => {
+                mouseX = -1000;
+                mouseY = -1000;
+            });
+
+            init();
+        })();
+
+        // ============ Scroll Animations ============
+        (function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.paper-card').forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.15}s`;
+                observer.observe(card);
+            });
+        })();
+
+        // ============ Card Hover Sound Effect (Optional) ============
+        (function() {
+            document.querySelectorAll('.paper-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                });
+            });
+        })();
+    </script>
+
+</body>
+</html>

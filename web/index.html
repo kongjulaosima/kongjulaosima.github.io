@@ -53,22 +53,9 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            min-height: 1.2em;
-        }
-
-        .typewriter-cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1em;
-            background: #60a5fa;
-            margin-left: 4px;
-            animation: blink 0.8s infinite;
-            vertical-align: text-bottom;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s ease forwards;
         }
 
         .hero p {
@@ -97,8 +84,6 @@
             font-weight: 500;
             font-size: 1rem;
             transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
         }
 
         .hero .cta a:hover {
@@ -223,9 +208,7 @@
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.5s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            cursor: default;
         }
 
         .skill-card.visible {
@@ -235,24 +218,8 @@
 
         .skill-card:hover {
             border-color: #60a5fa;
-            transform: translateY(-5px) scale(1.02) !important;
+            transform: translateY(-5px) !important;
             box-shadow: 0 8px 30px rgba(96, 165, 250, 0.15);
-        }
-
-        .skill-card .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(96, 165, 250, 0.4);
-            transform: scale(0);
-            animation: ripple 0.6s linear;
-            pointer-events: none;
-        }
-
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
         }
 
         .skill-icon {
@@ -281,25 +248,19 @@
             padding: 32px;
             backdrop-filter: blur(10px);
             opacity: 0;
-            transform: translateY(20px) scale(0.95);
+            transform: translateY(20px);
             transition: all 0.5s ease;
-            transform-style: preserve-3d;
-            perspective: 1000px;
         }
 
         .project-card.visible {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
         .project-card:hover {
             border-color: #a78bfa;
-            transform: translateY(-8px) scale(1.02) rotateX(5deg) rotateY(-5deg) !important;
-            box-shadow: 0 20px 40px rgba(167, 139, 250, 0.2);
-        }
-
-        .project-card .card-inner {
-            transition: transform 0.3s ease;
+            transform: translateY(-5px) !important;
+            box-shadow: 0 8px 30px rgba(167, 139, 250, 0.15);
         }
 
         .project-card h3 {
@@ -433,186 +394,38 @@
             text-decoration: none;
             font-size: 0.9rem;
             transition: color 0.3s;
-            position: relative;
         }
 
         .nav-links a:hover {
             color: #60a5fa;
         }
 
-        .nav-links a.active {
-            color: #60a5fa;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #60a5fa, #a78bfa);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
-        }
-
-        /* Floating shapes animation */
-        .floating-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .shape {
-            position: absolute;
-            opacity: 0.1;
-            animation: floatShape 20s ease-in-out infinite;
-        }
-
-        .shape:nth-child(1) {
-            top: 10%;
-            left: 10%;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #60a5fa, transparent);
-            border-radius: 50%;
-            animation-delay: 0s;
-        }
-
-        .shape:nth-child(2) {
-            top: 60%;
-            right: 15%;
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #a78bfa, transparent);
-            border-radius: 20px;
-            animation-delay: -5s;
-            animation-duration: 25s;
-        }
-
-        .shape:nth-child(3) {
-            bottom: 20%;
-            left: 20%;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #f472b6, transparent);
-            border-radius: 50%;
-            animation-delay: -10s;
-            animation-duration: 18s;
-        }
-
-        @keyframes floatShape {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
-        }
-
-        /* Glitch effect for title */
-        .glitch {
-            position: relative;
-        }
-
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-        }
-
-        .glitch::before {
-            left: 2px;
-            text-shadow: -2px 0 #f472b6;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim 5s infinite linear alternate-reverse;
-        }
-
-        .glitch::after {
-            left: -2px;
-            text-shadow: -2px 0 #60a5fa;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim2 5s infinite linear alternate-reverse;
-        }
-
-        @keyframes glitch-anim {
-            0% { clip: rect(31px, 9999px, 94px, 0); }
-            20% { clip: rect(68px, 9999px, 5px, 0); }
-            40% { clip: rect(14px, 9999px, 72px, 0); }
-            60% { clip: rect(85px, 9999px, 19px, 0); }
-            80% { clip: rect(37px, 9999px, 56px, 0); }
-            100% { clip: rect(52px, 9999px, 13px, 0); }
-        }
-
-        @keyframes glitch-anim2 {
-            0% { clip: rect(65px, 9999px, 100px, 0); }
-            20% { clip: rect(22px, 9999px, 44px, 0); }
-            40% { clip: rect(80px, 9999px, 13px, 0); }
-            60% { clip: rect(37px, 9999px, 78px, 0); }
-            80% { clip: rect(58px, 9999px, 25px, 0); }
-            100% { clip: rect(14px, 9999px, 89px, 0); }
-        }
-
-        /* Counter animation */
-        .counter {
-            display: inline-block;
-        }
-
         @media (max-width: 640px) {
             section { padding: 60px 16px; }
             .stats { gap: 30px; }
             .nav-links { display: none; }
-            .nav-links.mobile-open {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(10, 10, 15, 0.95);
-                padding: 16px;
-                gap: 16px;
-            }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="particle-canvas"></canvas>
-
-    <div class="floating-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
-
     <nav class="nav-bar" id="navbar">
         <span class="nav-logo">✦ Home</span>
-        <ul class="nav-links" id="navLinks">
+        <ul class="nav-links">
             <li><a href="#about">关于</a></li>
             <li><a href="#skills">技能</a></li>
             <li><a href="#projects">项目</a></li>
-            <li><a href="papers.html">大模型论文学习</a></li>
-            <li><a href="presentation.html">演示文稿</a></li>
             <li><a href="#contact">联系</a></li>
         </ul>
     </nav>
 
+    <canvas id="particle-canvas"></canvas>
+
     <div class="content">
 
         <section class="hero" id="hero">
-            <h1 id="typewriter" class="glitch" data-text="你好，我是开发者">你好，我是开发者</h1>
-            <p id="subtitle">热爱编程，热衷于用代码创造美好的数字体验。专注于 Web 开发、人工智能与创意编程。</p>
+            <h1>你好，我是开发者</h1>
+            <p>热爱编程，热衷于用代码创造美好的数字体验。专注于 Web 开发、人工智能与创意编程。</p>
             <div class="cta">
                 <a href="#projects">探索项目</a>
             </div>
@@ -630,11 +443,11 @@
                 <p>在工作之余，我喜欢参与开源项目、撰写技术博客，以及在各种编程社区中分享知识。</p>
                 <div class="stats">
                     <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="5">0</span>+</div>
+                        <div class="stat-number">5+</div>
                         <div class="stat-label">项目经验</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="3">0</span>+</div>
+                        <div class="stat-number">3+</div>
                         <div class="stat-label">技术方向</div>
                     </div>
                     <div class="stat-item">
@@ -661,25 +474,19 @@
             <h2 class="section-title"><span>项目展示</span></h2>
             <div class="projects-grid">
                 <div class="project-card">
-                    <div class="card-inner">
-                        <h3>智能数据分析平台</h3>
-                        <p>基于机器学习的数据分析平台，支持自动数据清洗、可视化和预测分析。</p>
-                        <div class="project-tags"><span>Python</span><span>React</span><span>TensorFlow</span></div>
-                    </div>
+                    <h3>智能数据分析平台</h3>
+                    <p>基于机器学习的数据分析平台，支持自动数据清洗、可视化和预测分析。</p>
+                    <div class="project-tags"><span>Python</span><span>React</span><span>TensorFlow</span></div>
                 </div>
                 <div class="project-card">
-                    <div class="card-inner">
-                        <h3>实时协作白板</h3>
-                        <p>支持多人实时协作的在线白板应用，基于 WebSocket 实现毫秒级同步。</p>
-                        <div class="project-tags"><span>Node.js</span><span>Canvas</span><span>WebSocket</span></div>
-                    </div>
+                    <h3>实时协作白板</h3>
+                    <p>支持多人实时协作的在线白板应用，基于 WebSocket 实现毫秒级同步。</p>
+                    <div class="project-tags"><span>Node.js</span><span>Canvas</span><span>WebSocket</span></div>
                 </div>
                 <div class="project-card">
-                    <div class="card-inner">
-                        <h3>创意粒子引擎</h3>
-                        <p>高性能 Web 粒子系统引擎，支持上万粒子的实时交互与物理模拟。</p>
-                        <div class="project-tags"><span>Canvas</span><span>WebGL</span><span>TypeScript</span></div>
-                    </div>
+                    <h3>创意粒子引擎</h3>
+                    <p>高性能 Web 粒子系统引擎，支持上万粒子的实时交互与物理模拟。</p>
+                    <div class="project-tags"><span>Canvas</span><span>WebGL</span><span>TypeScript</span></div>
                 </div>
             </div>
         </section>
@@ -703,55 +510,14 @@
     </div>
 
     <script>
-        // ============ Typewriter Effect ============
         (function() {
-            const titles = [
-                '你好，我是开发者',
-                'Welcome to My Space',
-                '热爱 Web 与 AI',
-                'Building the Future'
-            ];
-            let titleIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-            let typeSpeed = 100;
-            const typewriterEl = document.getElementById('typewriter');
 
-            function type() {
-                const currentTitle = titles[titleIndex];
-
-                if (isDeleting) {
-                    typewriterEl.textContent = currentTitle.substring(0, charIndex - 1);
-                    charIndex--;
-                    typeSpeed = 50;
-                } else {
-                    typewriterEl.textContent = currentTitle.substring(0, charIndex + 1);
-                    charIndex++;
-                    typeSpeed = 100;
-                }
-
-                if (!isDeleting && charIndex === currentTitle.length) {
-                    isDeleting = true;
-                    typeSpeed = 2000;
-                } else if (isDeleting && charIndex === 0) {
-                    isDeleting = false;
-                    titleIndex = (titleIndex + 1) % titles.length;
-                    typeSpeed = 500;
-                }
-
-                setTimeout(type, typeSpeed);
-            }
-
-            setTimeout(type, 1500);
-        })();
-
-        // ============ Particle Canvas ============
-        (function() {
             const canvas = document.getElementById('particle-canvas');
             const ctx = canvas.getContext('2d');
             let particles = [];
             let mouseX = -1000;
             let mouseY = -1000;
+            let animationId = null;
 
             function resize() {
                 canvas.width = window.innerWidth;
@@ -828,7 +594,7 @@
                     }
                 }
 
-                requestAnimationFrame(drawParticles);
+                animationId = requestAnimationFrame(drawParticles);
             }
 
             function init() {
@@ -860,10 +626,11 @@
             });
 
             init();
+
         })();
 
-        // ============ Intersection Observer & Animations ============
         (function() {
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -899,64 +666,12 @@
             document.querySelectorAll('.nav-links a').forEach(a => {
                 a.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const href = a.getAttribute('href');
-                    if (href.endsWith('.html')) {
-                        window.location.href = href;
-                    } else {
-                        const target = document.querySelector(href);
-                        if (target) {
-                            target.scrollIntoView({ behavior: 'smooth' });
-                        }
+                    const target = document.querySelector(a.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
                     }
                 });
             });
-        })();
-
-        // ============ Ripple Effect on Skill Cards ============
-        (function() {
-            document.querySelectorAll('.skill-card').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    const rect = this.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-
-                    const ripple = document.createElement('span');
-                    ripple.className = 'ripple';
-                    ripple.style.left = x + 'px';
-                    ripple.style.top = y + 'px';
-                    ripple.style.width = ripple.style.height = '20px';
-
-                    this.appendChild(ripple);
-
-                    setTimeout(() => ripple.remove(), 600);
-                });
-            });
-        })();
-
-        // ============ Counter Animation ============
-        (function() {
-            const counters = document.querySelectorAll('.counter');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const target = parseInt(entry.target.dataset.target);
-                        let current = 0;
-                        const increment = target / 30;
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= target) {
-                                entry.target.textContent = target;
-                                clearInterval(timer);
-                            } else {
-                                entry.target.textContent = Math.floor(current);
-                            }
-                        }, 50);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-
-            counters.forEach(counter => observer.observe(counter));
         })();
     </script>
 
