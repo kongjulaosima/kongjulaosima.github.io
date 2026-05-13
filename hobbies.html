@@ -18,24 +18,45 @@
         .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 50px; text-align: center; opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
         .section-title.visible { opacity: 1; transform: translateY(0); }
         .section-title span { background: linear-gradient(135deg, #60a5fa, #a78bfa); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hobbies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; width: 100%; }
-        .hobby-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 32px; backdrop-filter: blur(10px); opacity: 0; transform: translateY(30px); transition: all 0.5s ease; position: relative; overflow: hidden; }
+
+        /* Hobby Card */
+        .hobby-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 32px; backdrop-filter: blur(10px); opacity: 0; transform: translateY(30px); transition: all 0.5s ease; position: relative; overflow: hidden; max-width: 900px; width: 100%; }
         .hobby-card.visible { opacity: 1; transform: translateY(0); }
         .hobby-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #f472b6, #fbbf24, #34d399); opacity: 0; transition: opacity 0.3s ease; }
-        .hobby-card:hover { border-color: rgba(244, 114, 182, 0.3); transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(244, 114, 182, 0.15); }
+        .hobby-card:hover { border-color: rgba(244, 114, 182, 0.3); box-shadow: 0 20px 40px rgba(244, 114, 182, 0.15); }
         .hobby-card:hover::before { opacity: 1; }
-        .hobby-icon { font-size: 3.5rem; margin-bottom: 20px; display: block; animation: floatGame 3s ease-in-out infinite; }
+
+        .hobby-header { display: flex; align-items: center; gap: 20px; margin-bottom: 24px; }
+        .hobby-icon { font-size: 3.5rem; animation: floatGame 3s ease-in-out infinite; }
         @keyframes floatGame { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(5deg); } }
-        .hobby-card h3 { font-size: 1.4rem; font-weight: 600; color: #e2e8f0; margin-bottom: 16px; }
-        .hobby-card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.8; margin-bottom: 16px; }
-        .hobby-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .hobby-title-group h3 { font-size: 1.6rem; font-weight: 600; color: #e2e8f0; margin-bottom: 8px; }
+        .hobby-title-group .subtitle { color: #64748b; font-size: 0.9rem; }
+        .hobby-desc { color: #94a3b8; font-size: 0.95rem; line-height: 1.8; margin-bottom: 24px; }
+        .hobby-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
         .hobby-tags span { padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; background: rgba(244, 114, 182, 0.15); color: #f472b6; border: 1px solid rgba(244, 114, 182, 0.2); }
-        .hobby-stats { display: flex; gap: 20px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
-        .hobby-stat { text-align: center; }
-        .hobby-stat-value { font-size: 1.3rem; font-weight: 700; color: #fbbf24; }
+
+        /* Team Section */
+        .team-section { margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+        .team-title { font-size: 1.1rem; color: #e2e8f0; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .team-title::before { content: '👥'; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+        .team-member { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; padding: 20px; transition: all 0.3s ease; text-align: center; }
+        .team-member:hover { border-color: rgba(244, 114, 182, 0.3); transform: translateY(-4px); }
+        .member-avatar { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 16px; object-fit: cover; border: 3px solid rgba(244, 114, 182, 0.3); transition: all 0.3s ease; }
+        .team-member:hover .member-avatar { border-color: #f472b6; transform: scale(1.05); }
+        .member-name { font-size: 1.1rem; font-weight: 600; color: #e2e8f0; margin-bottom: 4px; }
+        .member-id { font-size: 0.85rem; color: #60a5fa; font-family: monospace; margin-bottom: 12px; }
+        .member-trait { color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin-bottom: 12px; }
+        .member-role { display: inline-block; padding: 4px 10px; background: rgba(96, 165, 250, 0.1); color: #60a5fa; font-size: 0.75rem; border-radius: 6px; }
+
+        /* Stats */
+        .hobby-stats { display: flex; gap: 24px; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.06); flex-wrap: wrap; justify-content: center; }
+        .hobby-stat { text-align: center; min-width: 80px; }
+        .hobby-stat-value { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #fbbf24, #f472b6); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hobby-stat-label { font-size: 0.75rem; color: #64748b; margin-top: 4px; }
+
         footer { text-align: center; padding: 30px; color: #475569; font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
-        @media (max-width: 640px) { section { padding: 60px 16px; } .nav-links { display: none; } }
+        @media (max-width: 640px) { section { padding: 60px 16px; } .nav-links { display: none; } .team-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -55,30 +76,70 @@
     <div class="content">
         <section id="hobbies">
             <h2 class="section-title"><span>个人兴趣爱好</span></h2>
-            <div class="hobbies-grid">
-                <div class="hobby-card">
+
+            <div class="hobby-card">
+                <div class="hobby-header">
                     <span class="hobby-icon">🎮</span>
-                    <h3>PUBG</h3>
-                    <p>绝地求生（PlayerUnknown's Battlegrounds）是我最喜欢的射击游戏。在这个充满策略与刺激的战场上，我享受着与好友并肩作战的乐趣。每一场游戏都是一次新的挑战——从跳伞选点、搜集装备，到最后的决赛圈对决，都让我沉浸其中。</p>
-                    <p>我喜欢研究游戏中的战术配合，关注最新的版本更新和枪械平衡调整。不仅是娱乐，PUBG 也锻炼了我的反应能力和战略思维。</p>
-                    <div class="hobby-tags">
-                        <span>射击游戏</span>
-                        <span>战术竞技</span>
-                        <span>团队协作</span>
+                    <div class="hobby-title-group">
+                        <h3>PUBG</h3>
+                        <span class="subtitle">绝地求生 · EB 战队</span>
                     </div>
-                    <div class="hobby-stats">
-                        <div class="hobby-stat">
-                            <div class="hobby-stat-value">500+</div>
-                            <div class="hobby-stat-label">游戏时长</div>
+                </div>
+
+                <p class="hobby-desc">
+                    绝地求生（PlayerUnknown's Battlegrounds）是我最喜欢的射击游戏。EB 战队以默契的团队配合和多变的战术著称，在赛场上既有稳健的运营策略，也有敢于冒险的钢枪精神。每一位成员都有自己独特的游戏风格，互补互助，共同进步。
+                </p>
+
+                <div class="hobby-tags">
+                    <span>射击游戏</span>
+                    <span>战术竞技</span>
+                    <span>四排</span>
+                    <span>EB 战队</span>
+                </div>
+
+                <div class="team-section">
+                    <div class="team-title">战队成员</div>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <img src="hobbies/PUBG/Lin9Ge_.jpg" alt="零九哥" class="member-avatar">
+                            <div class="member-name">零九哥</div>
+                            <div class="member-id">ID: Lin9Ge_</div>
+                            <div class="member-trait">嘴硬但实力不凡，团队中的气氛制造者，关键时刻总能站出来带领队伍走向胜利。</div>
+                            <span class="member-role">突击手 / 指挥辅助</span>
                         </div>
-                        <div class="hobby-stat">
-                            <div class="hobby-stat-value">S</div>
-                            <div class="hobby-stat-label">最高段位</div>
+                        <div class="team-member">
+                            <img src="hobbies/PUBG/Loululuis.jpg" alt="路路" class="member-avatar">
+                            <div class="member-name">路路</div>
+                            <div class="member-id">ID: Loululuis</div>
+                            <div class="member-trait">看似"菜"实则深藏不露，关键时刻总能打出精彩操作，是队内的隐藏王牌。</div>
+                            <span class="member-role">自由人 / 狙击手</span>
                         </div>
-                        <div class="hobby-stat">
-                            <div class="hobby-stat-value">10+</div>
-                            <div class="hobby-stat-label">四排队友</div>
+                        <div class="team-member">
+                            <img src="hobbies/PUBG/FreeCloudoO.jpg" alt="曹洪" class="member-avatar">
+                            <div class="member-name">曹洪</div>
+                            <div class="member-id">ID: FreeCloudoO</div>
+                            <div class="member-trait">战术大师，吹牛也是一门艺术，决赛圈策略担当，总能制定出奇制胜的战术。</div>
+                            <span class="member-role">战术指挥 / 医疗兵</span>
                         </div>
+                    </div>
+                </div>
+
+                <div class="hobby-stats">
+                    <div class="hobby-stat">
+                        <div class="hobby-stat-value">500+</div>
+                        <div class="hobby-stat-label">游戏时长</div>
+                    </div>
+                    <div class="hobby-stat">
+                        <div class="hobby-stat-value">S</div>
+                        <div class="hobby-stat-label">最高段位</div>
+                    </div>
+                    <div class="hobby-stat">
+                        <div class="hobby-stat-value">3</div>
+                        <div class="hobby-stat-label">战队人数</div>
+                    </div>
+                    <div class="hobby-stat">
+                        <div class="hobby-stat-value">四排</div>
+                        <div class="hobby-stat-label">主要模式</div>
                     </div>
                 </div>
             </div>
