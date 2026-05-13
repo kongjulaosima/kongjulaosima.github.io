@@ -37,8 +37,7 @@
 
         /* Team Section */
         .team-section { margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
-        .team-title { font-size: 1.1rem; color: #e2e8f0; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
-        .team-title::before { content: '👥'; }
+        .team-title { font-size: 1.2rem; color: #e2e8f0; margin-bottom: 20px; font-weight: 600; }
         .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
         .team-member { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px; padding: 20px; transition: all 0.3s ease; text-align: center; }
         .team-member:hover { border-color: rgba(244, 114, 182, 0.3); transform: translateY(-4px); }
@@ -48,6 +47,11 @@
         .member-id { font-size: 0.85rem; color: #60a5fa; font-family: monospace; margin-bottom: 12px; }
         .member-trait { color: #94a3b8; font-size: 0.9rem; line-height: 1.6; margin-bottom: 12px; }
         .member-role { display: inline-block; padding: 4px 10px; background: rgba(96, 165, 250, 0.1); color: #60a5fa; font-size: 0.75rem; border-radius: 6px; }
+
+        /* Team Style */
+        .team-style { margin-top: 24px; padding: 20px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.06); }
+        .team-style-title { font-size: 1rem; color: #e2e8f0; margin-bottom: 12px; font-weight: 600; }
+        .team-style-desc { color: #94a3b8; font-size: 0.9rem; line-height: 1.7; }
 
         /* Stats */
         .hobby-stats { display: flex; gap: 24px; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.06); flex-wrap: wrap; justify-content: center; }
@@ -87,7 +91,7 @@
                 </div>
 
                 <p class="hobby-desc">
-                    绝地求生（PlayerUnknown's Battlegrounds）是我最喜欢的射击游戏。EB 战队以默契的团队配合和多变的战术著称，在赛场上既有稳健的运营策略，也有敢于冒险的钢枪精神。每一位成员都有自己独特的游戏风格，互补互助，共同进步。
+                    EB 战队以默契的团队配合和多变的战术著称，在赛场上既有稳健的运营策略，也有敢于冒险的钢枪精神。每一位成员都有自己独特的游戏风格，互补互助，共同进步。
                 </p>
 
                 <div class="hobby-tags">
@@ -104,42 +108,49 @@
                             <img src="hobbies/PUBG/Lin9Ge_.jpg" alt="零九哥" class="member-avatar">
                             <div class="member-name">零九哥</div>
                             <div class="member-id">ID: Lin9Ge_</div>
-                            <div class="member-trait">嘴硬但实力不凡，团队中的气氛制造者，关键时刻总能站出来带领队伍走向胜利。</div>
+                            <div class="member-trait">嘴硬但实力不凡，团队中的气氛制造者</div>
                             <span class="member-role">突击手 / 指挥辅助</span>
                         </div>
                         <div class="team-member">
                             <img src="hobbies/PUBG/Loululuis.jpg" alt="路路" class="member-avatar">
                             <div class="member-name">路路</div>
                             <div class="member-id">ID: Loululuis</div>
-                            <div class="member-trait">看似"菜"实则深藏不露，关键时刻总能打出精彩操作，是队内的隐藏王牌。</div>
+                            <div class="member-trait">看似"菜"实则深藏不露，关键时刻总能打出精彩操作</div>
                             <span class="member-role">自由人 / 狙击手</span>
                         </div>
                         <div class="team-member">
                             <img src="hobbies/PUBG/FreeCloudoO.jpg" alt="曹洪" class="member-avatar">
                             <div class="member-name">曹洪</div>
                             <div class="member-id">ID: FreeCloudoO</div>
-                            <div class="member-trait">战术大师，吹牛也是一门艺术，决赛圈策略担当，总能制定出奇制胜的战术。</div>
+                            <div class="member-trait">战术大师，吹牛也是一门艺术，决赛圈策略担当</div>
                             <span class="member-role">战术指挥 / 医疗兵</span>
                         </div>
                     </div>
                 </div>
 
+                <div class="team-style">
+                    <div class="team-style-title">战队风格</div>
+                    <div class="team-style-desc">
+                        EB 战队以默契的团队配合和多变的战术著称，在赛场上既有稳健的运营策略，也有敢于冒险的钢枪精神。每一位成员都有自己独特的游戏风格，互补互助，共同进步。
+                    </div>
+                </div>
+
                 <div class="hobby-stats">
                     <div class="hobby-stat">
-                        <div class="hobby-stat-value">500+</div>
-                        <div class="hobby-stat-label">游戏时长</div>
+                        <div class="hobby-stat-value">长期</div>
+                        <div class="hobby-stat-label">战队成立</div>
+                    </div>
+                    <div class="hobby-stat">
+                        <div class="hobby-stat-value">四排</div>
+                        <div class="hobby-stat-label">主要模式</div>
                     </div>
                     <div class="hobby-stat">
                         <div class="hobby-stat-value">S</div>
                         <div class="hobby-stat-label">最高段位</div>
                     </div>
                     <div class="hobby-stat">
-                        <div class="hobby-stat-value">3</div>
-                        <div class="hobby-stat-label">战队人数</div>
-                    </div>
-                    <div class="hobby-stat">
-                        <div class="hobby-stat-value">四排</div>
-                        <div class="hobby-stat-label">主要模式</div>
+                        <div class="hobby-stat-value">500+</div>
+                        <div class="hobby-stat-label">游戏时长</div>
                     </div>
                 </div>
             </div>
