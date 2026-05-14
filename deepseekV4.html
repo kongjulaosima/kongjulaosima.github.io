@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepSeek V4 技术报告 | 开源旗舰大模型</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:#1a1a2e;background:#fafafa;line-height:1.7}
+.container{max-width:1280px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(77,107,254,0.1);z-index:100;padding:0}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#3A52D9;font-family:"Source Serif 4",Georgia,serif;font-size:1.4rem;font-weight:600}
+.nav-logo svg{width:32px;height:32px}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:#6b7280;text-decoration:none;font-size:0.9rem;transition:color 0.2s}
+.nav-links a:hover{color:#4D6BFE}
+.hero{background:linear-gradient(135deg,#EEF1FF 0%,#fff 50%,#EEF1FF 100%);padding:80px 0 100px;text-align:center;border-bottom:1px solid rgba(77,107,254,0.1)}
+.hero h1{font-family:"Source Serif 4",Georgia,serif;font-size:3.5rem;font-weight:700;color:#3A52D9;margin-bottom:16px;letter-spacing:-1px}
+.hero-subtitle{font-size:1.2rem;color:#6b7280;margin-bottom:48px;max-width:600px;margin-left:auto;margin-right:auto}
+.hero-metrics{display:flex;justify-content:center;gap:48px;flex-wrap:wrap}
+.metric{text-align:center}
+.metric-value{font-family:"JetBrains Mono",monospace;font-size:2.5rem;font-weight:500;color:#4D6BFE}
+.metric-label{font-size:0.9rem;color:#6b7280;margin-top:4px}
+section{padding:80px 0}
+.section-title{font-family:"Source Serif 4",Georgia,serif;font-size:2rem;font-weight:600;color:#3A52D9;margin-bottom:40px;text-align:center}
+.models-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;max-width:900px;margin:0 auto}
+.model-card{background:#fff;border:1px solid rgba(77,107,254,0.2);border-radius:16px;padding:32px;transition:box-shadow 0.3s,transform 0.3s}
+.model-card:hover{box-shadow:0 8px 32px rgba(77,107,254,0.15);transform:translateY(-4px)}
+.model-card.pro{border-color:#4D6BFE;border-width:2px}
+.model-badge{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:0.75rem;padding:4px 12px;border-radius:20px;background:#EEF1FF;color:#4D6BFE;margin-bottom:16px}
+.model-card.pro .model-badge{background:#4D6BFE;color:#fff}
+.model-name{font-family:"Source Serif 4",Georgia,serif;font-size:1.8rem;font-weight:600;color:#3A52D9;margin-bottom:8px}
+.model-desc{color:#6b7280;margin-bottom:24px;font-size:0.95rem}
+.model-specs{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.spec-item{background:#EEF1FF;padding:12px;border-radius:8px}
+.spec-label{font-size:0.75rem;color:#6b7280;margin-bottom:4px}
+.spec-value{font-family:"JetBrains Mono",monospace;font-size:1.1rem;font-weight:500;color:#3A52D9}
+.innovations-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.innovation-card{background:#fff;border:1px solid rgba(77,107,254,0.15);border-radius:12px;padding:24px;text-align:center;transition:border-color 0.3s}
+.innovation-card:hover{border-color:#4D6BFE}
+.innovation-icon{width:48px;height:48px;background:#EEF1FF;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-family:"JetBrains Mono",monospace;font-size:0.9rem;font-weight:500;color:#4D6BFE}
+.innovation-title{font-family:"Source Serif 4",Georgia,serif;font-size:1.1rem;font-weight:600;color:#3A52D9;margin-bottom:8px}
+.innovation-desc{font-size:0.85rem;color:#6b7280;line-height:1.6}
+.efficiency-section{background:#EEF1FF}
+.efficiency-chart{max-width:800px;margin:0 auto 40px}
+.efficiency-chart svg{width:100%;height:auto}
+.efficiency-notes{max-width:700px;margin:0 auto;background:#fff;border-radius:12px;padding:24px;border:1px solid rgba(77,107,254,0.1)}
+.efficiency-note{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+.efficiency-note:last-child{margin-bottom:0}
+.efficiency-note .bullet{width:8px;height:8px;background:#4D6BFE;border-radius:50%;margin-top:8px;flex-shrink:0}
+.benchmark-table{max-width:900px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid rgba(77,107,254,0.15)}
+.benchmark-table table{width:100%;border-collapse:collapse}
+.benchmark-table th{background:#EEF1FF;padding:16px;text-align:left;font-family:"Source Serif 4",Georgia,serif;font-weight:600;color:#3A52D9;border-bottom:2px solid #4D6BFE}
+.benchmark-table th:not(:first-child){text-align:center}
+.benchmark-table td{padding:14px 16px;border-bottom:1px solid rgba(77,107,254,0.1)}
+.benchmark-table td:not(:first-child){text-align:center;font-family:"JetBrains Mono",monospace}
+.benchmark-table tr:last-child td{border-bottom:none}
+.benchmark-table tr:hover{background:#EEF1FF}
+.highlight{color:#4D6BFE;font-weight:500}
+.limitations-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.limitation-card{background:#fff;border-left:4px solid #7E93FF;border-radius:0 12px 12px 0;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.limitation-icon{font-size:1.5rem;margin-bottom:12px}
+.limitation-title{font-family:"Source Serif 4",Georgia,serif;font-size:1.1rem;font-weight:600;color:#3A52D9;margin-bottom:8px}
+.limitation-desc{font-size:0.85rem;color:#6b7280;line-height:1.6}
+.pricing-section{background:linear-gradient(180deg,#fff 0%,#EEF1FF 100%)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1000px;margin:0 auto}
+.pricing-card{background:#fff;border-radius:16px;padding:32px;text-align:center;border:1px solid rgba(77,107,254,0.2);transition:transform 0.3s}
+.pricing-card:hover{transform:translateY(-4px)}
+.pricing-card.featured{border-color:#4D6BFE;border-width:2px;box-shadow:0 8px 32px rgba(77,107,254,0.15)}
+.pricing-model{font-family:"Source Serif 4",Georgia,serif;font-size:1.4rem;font-weight:600;color:#3A52D9;margin-bottom:8px}
+.pricing-type{font-size:0.85rem;color:#6b7280;margin-bottom:24px}
+.pricing-amount{font-family:"JetBrains Mono",monospace;font-size:2rem;font-weight:500;color:#4D6BFE}
+.pricing-unit{font-size:0.9rem;color:#6b7280}
+.pricing-detail{margin-top:16px;font-size:0.85rem;color:#6b7280}
+.savings-note{text-align:center;margin-top:32px;padding:20px;background:#fff;border-radius:12px;max-width:700px;margin-left:auto;margin-right:auto}
+.savings-note p{color:#6b7280;font-size:0.95rem}
+.savings-note strong{color:#4D6BFE}
+.agent-section{background:#EEF1FF}
+.agent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:900px;margin:0 auto}
+.agent-card{background:#fff;border-radius:12px;padding:24px;text-align:center;border:1px solid rgba(77,107,254,0.1);transition:border-color 0.3s}
+.agent-card:hover{border-color:#4D6BFE}
+.agent-name{font-family:"Source Serif 4",Georgia,serif;font-size:1.1rem;font-weight:600;color:#3A52D9;margin-bottom:8px}
+.agent-desc{font-size:0.85rem;color:#6b7280}
+.quote-section{padding:100px 0;text-align:center;background:linear-gradient(135deg,#3A52D9 0%,#4D6BFE 100%);color:#fff}
+.quote-text{font-family:"Source Serif 4",Georgia,serif;font-size:2.2rem;font-weight:400;margin-bottom:16px;letter-spacing:2px}
+.quote-source{font-size:1rem;opacity:0.8}
+footer{background:#1a1a2e;color:#fff;padding:48px 0}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-links{display:flex;gap:32px;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,0.7);text-decoration:none;transition:color 0.2s;font-size:0.9rem}
+.footer-links a:hover{color:#7E93FF}
+.footer-copyright{font-size:0.85rem;color:rgba(255,255,255,0.5)}
+@media(max-width:1024px){.innovations-grid,.limitations-grid,.agent-grid{grid-template-columns:repeat(2,1fr)}.pricing-grid{grid-template-columns:1fr;max-width:400px}}
+@media(max-width:768px){.hero h1{font-size:2.5rem}.hero-metrics{gap:24px}.models-grid,.innovations-grid,.limitations-grid,.agent-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column;text-align:center}}
+</style>
+</head>
+<body>
+<nav>
+<div class="container nav-inner">
+<div class="nav-logo">
+<svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" fill="#4D6BFE"/><path d="M10 16C10 12.6863 12.6863 10 16 10V22C12.6863 22 10 19.3137 10 16Z" fill="white"/><circle cx="20" cy="16" r="3" fill="white"/></svg>
+DeepSeek
+</div>
+<div class="nav-links">
+<a href="https://api-docs.deepseek.com" target="_blank">API文档</a>
+<a href="https://chat.deepseek.com" target="_blank">在线体验</a>
+<a href="https://huggingface.co/deepseek-ai" target="_blank">Hugging Face</a>
+</div>
+</div>
+</nav>
+<section class="hero">
+<div class="container">
+<h1>DeepSeek V4</h1>
+<p class="hero-subtitle">2026年4月24日发布 · MIT开源协议 · 从零设计的百万上下文架构</p>
+<div class="hero-metrics">
+<div class="metric"><div class="metric-value">1M</div><div class="metric-label">原生上下文窗口</div></div>
+<div class="metric"><div class="metric-value">27%</div><div class="metric-label">推理FLOPs（vs V3.2）</div></div>
+<div class="metric"><div class="metric-value">10%</div><div class="metric-label">KV Cache（vs V3.2）</div></div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<h2 class="section-title">两个模型：旗舰与高效</h2>
+<div class="models-grid">
+<div class="model-card pro">
+<span class="model-badge">旗舰</span>
+<h3 class="model-name">DeepSeek-V4-Pro</h3>
+<p class="model-desc">性能对标世界顶级闭源模型。适合复杂代码推理、高阶数学、长程Agent任务。训练数据33T tokens。</p>
+<div class="model-specs">
+<div class="spec-item"><div class="spec-label">总参数量</div><div class="spec-value">1.6T</div></div>
+<div class="spec-item"><div class="spec-label">激活参数</div><div class="spec-value">49B</div></div>
+<div class="spec-item"><div class="spec-label">上下文</div><div class="spec-value">1M tokens</div></div>
+<div class="spec-item"><div class="spec-label">磁盘体积</div><div class="spec-value">862 GB</div></div>
+</div>
+</div>
+<div class="model-card">
+<span class="model-badge">高效</span>
+<h3 class="model-name">DeepSeek-V4-Flash</h3>
+<p class="model-desc">极致推理效率，高吞吐低成本。简单Agent任务与Pro旗鼓相当，是日常API调用的首选模型。</p>
+<div class="model-specs">
+<div class="spec-item"><div class="spec-label">总参数量</div><div class="spec-value">284B</div></div>
+<div class="spec-item"><div class="spec-label">激活参数</div><div class="spec-value">13B</div></div>
+<div class="spec-item"><div class="spec-label">上下文</div><div class="spec-value">1M tokens</div></div>
+<div class="spec-item"><div class="spec-label">磁盘体积</div><div class="spec-value">160 GB</div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<h2 class="section-title">四项架构创新</h2>
+<div class="innovations-grid">
+<div class="innovation-card">
+<div class="innovation-icon">mHC</div>
+<h3 class="innovation-title">mHC残差连接</h3>
+<p class="innovation-desc">Manifold-Constrained Hyper-Connections，将残差映射约束在双随机矩阵的Birkhoff多面体流形上，保证谱范数有界、传播非膨胀。已独立发表论文，V4首次进旗舰模型。</p>
+</div>
+<div class="innovation-card">
+<div class="innovation-icon">CSA</div>
+<h3 class="innovation-title">CSA稀疏注意力</h3>
+<p class="innovation-desc">Compressed Sparse Attention。先以4:1压缩KV（V4-Flash），再用indexer query heads选出最相关的512个压缩entry计算稀疏注意力。Partial RoPE + Attention Sink 辅助。</p>
+</div>
+<div class="innovation-card">
+<div class="innovation-icon">HCA</div>
+<h3 class="innovation-title">HCA稠密注意力</h3>
+<p class="innovation-desc">Heavily Compressed Attention。以128:1超高压缩比聚合远距离背景信息，不做稀疏选择保持稠密计算，配合CSA实现"精读+略读"的混合注意力策略。</p>
+</div>
+<div class="innovation-card">
+<div class="innovation-icon">FP4</div>
+<h3 class="innovation-title">FP4 QAT量化</h3>
+<p class="innovation-desc">MoE expert权重采用FP4量化感知训练，非expert参数保持FP8。KV Cache以FP8为主、仅RoPE维度保留BF16。对比上一代FP8方案，单卡推理吞吐量大幅提升。</p>
+</div>
+</div>
+</div>
+</section>
+<section class="efficiency-section">
+<div class="container">
+<h2 class="section-title">效率突破：V3.2 vs V4</h2>
+<div class="efficiency-chart">
+<svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,sans-serif">
+<defs>
+<linearGradient id="v3bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3A52D9" stop-opacity="0.9"/><stop offset="100%" stop-color="#3A52D9" stop-opacity="0.4"/></linearGradient>
+<linearGradient id="v4bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4D6BFE" stop-opacity="0.9"/><stop offset="100%" stop-color="#4D6BFE" stop-opacity="0.4"/></linearGradient>
+<linearGradient id="flashbar" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7E93FF" stop-opacity="0.9"/><stop offset="100%" stop-color="#7E93FF" stop-opacity="0.4"/></linearGradient>
+</defs>
+<text x="350" y="28" text-anchor="middle" font-family="Source Serif 4,Georgia,serif" font-size="16" font-weight="600" fill="#3A52D9">1M上下文下单Token推理成本对比</text>
+<text x="350" y="48" text-anchor="middle" fill="#6b7280" font-size="12">(以V3.2各项为基准100%)</text>
+<g transform="translate(60,75)">
+<text x="90" y="-8" text-anchor="middle" fill="#6b7280" font-size="12">推理FLOPs</text>
+<rect x="0" y="0" width="180" height="120" fill="url(#v3bar)" rx="4"/>
+<rect x="0" y="84" width="180" height="36" fill="#e5e7eb" rx="4"/>
+<text x="90" y="60" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">V3.2: 100%</text>
+<text x="90" y="108" text-anchor="middle" fill="#1a1a2e" font-size="13" font-weight="600">V4-Pro: 27%</text>
+<g transform="translate(0,126)">
+<rect x="0" y="0" width="180" height="36" fill="url(#flashbar)" rx="4"/>
+<text x="90" y="24" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">V4-Flash: 10%</text>
+</g>
+<g transform="translate(220,-8)">
+<text x="90" y="-8" text-anchor="middle" fill="#6b7280" font-size="12">KV Cache</text>
+<rect x="0" y="0" width="180" height="120" fill="url(#v3bar)" rx="4"/>
+<rect x="0" y="108" width="180" height="12" fill="url(#v4bar)" rx="3"/>
+<text x="90" y="60" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">V3.2: 100%</text>
+<text x="90" y="116" text-anchor="middle" fill="#1a1a2e" font-size="13" font-weight="600">Pro: 10%</text>
+<g transform="translate(0,126)">
+<rect x="0" y="0" width="180" height="10" fill="url(#flashbar)" rx="3"/>
+<text x="90" y="24" text-anchor="middle" fill="#1a1a2e" font-size="13" font-weight="600">Flash: 7%</text>
+</g>
+</g>
+</g>
+</svg>
+</div>
+<div class="efficiency-notes">
+<div class="efficiency-note"><div class="bullet"></div><div><strong>Hybrid Attention架构</strong>：CSA以4:1压缩做稀疏选择 + HCA以128:1压缩做稠密兜底，上下文越长节省越显著</div></div>
+<div class="efficiency-note"><div class="bullet"></div><div><strong>V4-Pro</strong>：1M上下文下，单token推理FLOPs仅为V3.2的27%，KV Cache仅需10%</div></div>
+<div class="efficiency-note"><div class="bullet"></div><div><strong>V4-Flash</strong>：更极致——单token FLOPs仅需V3.2的10%，KV Cache仅需7%</div></div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<h2 class="section-title">Benchmark 对标</h2>
+<p style="text-align:center;color:#6b7280;margin-bottom:32px;font-size:0.9rem">V4-Pro-Max vs 闭源旗舰（来源：DeepSeek技术报告及公开评测）</p>
+<div class="benchmark-table">
+<table>
+<tr><th>基准测试</th><th>DeepSeek V4-Pro</th><th>Claude Opus 4.6</th><th>GPT-5.4 xHigh</th><th>Gemini 3.1 Pro</th></tr>
+<tr><td>MMLU-Pro</td><td class="highlight">87.5</td><td>89.1</td><td>87.5</td><td>91.0</td></tr>
+<tr><td>SimpleQA Verified</td><td class="highlight">57.9</td><td>46.2</td><td>45.3</td><td>75.6</td></tr>
+<tr><td>GPQA Diamond</td><td class="highlight">90.1</td><td>91.3</td><td>93.0</td><td>94.3</td></tr>
+<tr><td>HLE</td><td class="highlight">37.7</td><td>40.0</td><td>39.8</td><td>44.4</td></tr>
+<tr><td>LiveCodeBench</td><td class="highlight">93.5</td><td>88.8</td><td>—</td><td>91.7</td></tr>
+<tr><td>SWE-Bench Verified</td><td class="highlight">80.6</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>Terminal-Bench 2.0</td><td class="highlight">67.9</td><td>—</td><td>82.7</td><td>—</td></tr>
+<tr><td>Codeforces Rating</td><td class="highlight">3206</td><td>—</td><td>3168</td><td>—</td></tr>
+</table>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<h2 class="section-title">诚实审视</h2>
+<p style="text-align:center;color:#6b7280;margin-bottom:40px;font-size:0.9rem">花叔视角：不吹不黑，把丑话说在前头</p>
+<div class="limitations-grid">
+<div class="limitation-card">
+<div class="limitation-icon">&#x1F3AF;</div>
+<h3 class="limitation-title">品味差距</h3>
+<p class="limitation-desc">长对话的风格一致性和节奏把控与Claude、GPT仍有肉眼可见的差距。输出偶有"机翻感"，创意写作不够丝滑。这不是量化指标，是主观感受，但对内容创作者是硬伤。</p>
+</div>
+<div class="limitation-card">
+<div class="limitation-icon">&#x1F9E0;</div>
+<h3 class="limitation-title">Agent短板</h3>
+<p class="limitation-desc">Terminal-Bench 2.0仅67.9%，GPT-5.5达到82.7%。高难度复杂多步任务的稳定性不足，容易出现上下文漂移。内部自评：优于Sonnet 4.5，接近Opus 4.6非思考模式，但还有差距。</p>
+</div>
+<div class="limitation-card">
+<div class="limitation-icon">&#x1F30D;</div>
+<h3 class="limitation-title">知识广度</h3>
+<p class="limitation-desc">SimpleQA 57.9%虽大幅领先Opus和GPT，但Gemini 3.1 Pro高达75.6%。冷门领域和长尾知识仍然容易产生幻觉。论文坦诚披露了幻觉率问题——不知道答案时倾向"胡编"。</p>
+</div>
+<div class="limitation-card">
+<div class="limitation-icon">&#x270D;&#xFE0F;</div>
+<h3 class="limitation-title">本分姿态</h3>
+<p class="limitation-desc">技术报告没有藏着掖着，各项局限写得清清楚楚。开源1.6T权重 + 完整训练代码 + 详实的失败实验记录。这种"不诱于誉，不恐于诽"的本分态度，反而是最让人尊重的地方。</p>
+</div>
+</div>
+</div>
+</section>
+<section class="pricing-section">
+<div class="container">
+<h2 class="section-title">定价（人民币）</h2>
+<p style="text-align:center;color:#6b7280;margin-bottom:32px;font-size:0.9rem">单位：元/百万tokens</p>
+<div class="pricing-grid">
+<div class="pricing-card">
+<div class="pricing-model">V4-Flash</div>
+<div class="pricing-type">普惠首选 · 适合大规模调用</div>
+<div class="pricing-amount">&yen;1</div>
+<div class="pricing-unit">输入（缓存未命中）</div>
+<div class="pricing-detail">输出 &yen;2/百万tokens<br>缓存命中 &yen;0.2/百万tokens</div>
+</div>
+<div class="pricing-card featured">
+<div class="pricing-model">V4-Pro</div>
+<div class="pricing-type">性能旗舰 · 适合高难度任务</div>
+<div class="pricing-amount">&yen;12</div>
+<div class="pricing-unit">输入（缓存未命中）</div>
+<div class="pricing-detail">输出 &yen;24/百万tokens<br>缓存命中 &yen;1.2/百万tokens</div>
+</div>
+<div class="pricing-card">
+<div class="pricing-model">闭源参考</div>
+<div class="pricing-type">GPT-5.5 Pro / Opus 4.7</div>
+<div class="pricing-amount">&yen;17~1290</div>
+<div class="pricing-unit">输入 &yen;17.5+ / 输出 &yen;105+</div>
+<div class="pricing-detail">GPT-5.5输出约 &yen;1290/百万tokens<br>V4-Pro仅为GPT的 <strong style="color:#4D6BFE">1/7~1/50</strong></div>
+</div>
+</div>
+<div class="savings-note">
+<p>一个日均3000次调用的客服机器人：<strong>V4-Flash</strong> 月成本约 1,260 元，<strong>GPT-5.5</strong> 需 22,680 元。年成本差超 25 万元。</p>
+</div>
+</div>
+</section>
+<section class="agent-section">
+<div class="container">
+<h2 class="section-title">生态适配</h2>
+<p style="text-align:center;color:#6b7280;margin-bottom:32px;font-size:0.9rem">V4已为主流Agent框架做了专项适配优化</p>
+<div class="agent-grid">
+<div class="agent-card">
+<div class="agent-name">Claude Code</div>
+<div class="agent-desc">Agentic编码与代码库级操作的全面适配</div>
+</div>
+<div class="agent-card">
+<div class="agent-name">OpenClaw</div>
+<div class="agent-desc">开源Agent框架，支持复杂工具链编排</div>
+</div>
+<div class="agent-card">
+<div class="agent-name">OpenCode</div>
+<div class="agent-desc">代码生成与审查流程的深度集成</div>
+</div>
+<div class="agent-card">
+<div class="agent-name">CodeBuddy</div>
+<div class="agent-desc">轻量级编码助手，V4-Flash版本即可胜任</div>
+</div>
+</div>
+</div>
+</section>
+<section class="quote-section">
+<div class="container">
+<div class="quote-text">不诱于誉，不恐于诽</div>
+<div class="quote-source">—— 荀子 · 非十二子</div>
+</div>
+</section>
+<footer>
+<div class="container footer-inner">
+<div class="footer-copyright">&copy; 2026 DeepSeek · 报告解读由花叔视角呈现</div>
+<div class="footer-links">
+<a href="https://www.deepseek.com" target="_blank">DeepSeek 官网</a>
+<a href="https://api-docs.deepseek.com" target="_blank">API 文档</a>
+<a href="https://chat.deepseek.com" target="_blank">在线体验</a>
+<a href="https://huggingface.co/deepseek-ai" target="_blank">Hugging Face</a>
+<a href="https://github.com/deepseek-ai" target="_blank">GitHub</a>
+</div>
+</div>
+</footer>
+</body>
+</html>
