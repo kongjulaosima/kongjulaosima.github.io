@@ -16,7 +16,7 @@
 请给我简洁可用的提示词。
 
 ```markdown
-请使用 huashu-design skill，将 DeepSeek-V4 技术报告（pdf/DeepSeek_V4-20260506.pdf）转换成一个高质量的中文网页。
+请使用 huashu-design skill，将 DeepSeek-V4 技术报告（pdf/DeepSeek_V4.pdf）转换成一个高质量的中文网页。
 
 ## 设计参考
 - 配色：DeepSeek 蓝(#4D6BFE)为主色，深蓝(#3A52D9)、浅蓝(#7E93FF)、蓝洗底(#EEF1FF)辅助
@@ -41,8 +41,8 @@
 - 固定宽度 1280px，居中
 - 不使用框架，纯 HTML+CSS
 - SVG 内联绘制图表
-- 输出到项目根目录 `index.html`
-
+- 输出到项目根目录 `deepseekV4.html`
+- 添加到选项卡里面
 ## 内容要求
 - 从 PDF 技术报告中提取真实数据和原文
 - 保持「花叔视角」的解读风格：坦诚、不吹、有观点
