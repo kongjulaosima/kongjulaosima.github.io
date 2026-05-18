@@ -412,9 +412,36 @@
             z-index: 200;
             transition: width 0.4s ease;
         }
+
+        /* Back button */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(96, 165, 250, 0.2);
+            border-color: #60a5fa;
+            color: #60a5fa;
+            transform: translateX(-4px);
+        }
     </style>
 </head>
 <body>
+
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">← 返回主页</a>
 
     <div class="progress-bar" id="progressBar"></div>
 
@@ -426,102 +453,102 @@
             <div class="bg-decoration" style="width:300px;height:300px;background:#a78bfa;bottom:-80px;left:-80px;"></div>
             <div class="slide-content slide-animate">
                 <div class="float-icon" style="font-size:4rem;margin-bottom:20px;">🚀</div>
-                <h1><span class="gradient">HTML 演示文稿</span></h1>
-                <p>使用纯 HTML、CSS 和 JavaScript 构建的交互式演示</p>
+                <h1><span class="gradient">个人主页项目展示</span></h1>
+                <p>一个现代化的个人技术主页，展示学习成果与技术实践</p>
                 <p class="sub-text" style="margin-top:40px;color:#64748b;font-size:0.9rem;">← 使用键盘方向键或点击导航按钮浏览 →</p>
             </div>
         </div>
 
-        <!-- Slide 2: Features -->
+        <!-- Slide 2: Project Overview -->
         <div class="slide" data-index="1">
             <div class="bg-decoration" style="width:350px;height:350px;background:#a78bfa;top:-80px;left:-80px;"></div>
             <div class="slide-content slide-animate">
-                <h1><span class="gradient-green">核心特性</span></h1>
+                <h1><span class="gradient-green">项目概览</span></h1>
                 <ul class="feature-list">
-                    <li>纯前端实现，无需任何外部依赖</li>
-                    <li>丝滑的幻灯片切换动画</li>
-                    <li>键盘导航 + 触摸滑动支持</li>
-                    <li>响应式设计，适配各种屏幕尺寸</li>
+                    <li>纯前端静态网站，部署于 GitHub Pages</li>
+                    <li>8 个功能页面，覆盖学习与生活的各个方面</li>
+                    <li>响应式设计，适配桌面端与移动端</li>
+                    <li>粒子动画背景，沉浸式视觉体验</li>
                 </ul>
             </div>
         </div>
 
-        <!-- Slide 3: Technology Cards -->
+        <!-- Slide 3: Pages -->
         <div class="slide" data-index="2">
             <div class="bg-decoration" style="width:400px;height:400px;background:#f472b6;bottom:-120px;right:-120px;"></div>
             <div class="slide-content slide-animate">
-                <h1><span class="gradient-warm">技术栈</span></h1>
+                <h1><span class="gradient-warm">页面架构</span></h1>
                 <div class="card-grid">
                     <div class="card">
                         <div class="icon pulse-icon">📄</div>
-                        <h3>HTML5</h3>
-                        <p>语义化结构，现代 API</p>
+                        <h3>论文学习</h3>
+                        <p>DeepSeek V4、ACL 2025</p>
                     </div>
                     <div class="card">
-                        <div class="icon rotate-icon">🎨</div>
-                        <h3>CSS3</h3>
-                        <p>动画与过渡效果</p>
+                        <div class="icon rotate-icon">🤖</div>
+                        <h3>大模型应用</h3>
+                        <p>RAG、Agent 实战</p>
                     </div>
                     <div class="card">
-                        <div class="icon pulse-icon">⚡</div>
-                        <h3>JavaScript</h3>
-                        <p>交互逻辑与动态控制</p>
+                        <div class="icon pulse-icon">🎮</div>
+                        <h3>兴趣爱好</h3>
+                        <p>PUBG EB 战队</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 4: Code Example -->
+        <!-- Slide 4: Tech Stack -->
         <div class="slide" data-index="3">
             <div class="bg-decoration" style="width:300px;height:300px;background:#34d399;top:50%;left:-100px;transform:translateY(-50%);"></div>
             <div class="slide-content slide-animate">
-                <h1><span class="gradient">动画驱动</span></h1>
-                <p>CSS Keyframes 与 JavaScript 协同工作，创造丰富的动态体验</p>
+                <h1><span class="gradient">技术栈</span></h1>
+                <p>前端三剑客 + 现代 CSS 特性</p>
                 <div class="code-block">
-                    <span class="typing">@keyframes slideIn { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }</span>
+                    <span class="typing">HTML5 + CSS3 + JavaScript + Intersection Observer + Canvas</span>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 5: Interactive Demo -->
+        <!-- Slide 5: Features -->
         <div class="slide" data-index="4">
             <div class="bg-decoration" style="width:350px;height:350px;background:#fbbf24;top:-80px;right:-80px;"></div>
             <div class="bg-decoration" style="width:250px;height:250px;background:#60a5fa;bottom:-60px;left:-60px;"></div>
             <div class="slide-content slide-animate">
-                <h1><span class="shimmer-text">交互体验</span></h1>
-                <p>支持多种交互方式，让演示更加灵活</p>
+                <h1><span class="shimmer-text">核心功能</span></h1>
+                <p>丰富的交互体验与视觉效果</p>
                 <div class="card-grid" style="margin-top:40px;">
                     <div class="card">
-                        <div class="icon">⌨️</div>
-                        <h3>键盘控制</h3>
-                        <p>← → 方向键翻页</p>
+                        <div class="icon">✨</div>
+                        <h3>打字机动画</h3>
+                        <p>首页标题动态展示</p>
                     </div>
                     <div class="card">
-                        <div class="icon">🖱️</div>
-                        <h3>点击导航</h3>
-                        <p>点击底部圆点跳转</p>
+                        <div class="icon">🎨</div>
+                        <h3>粒子背景</h3>
+                        <p>Canvas 交互式粒子</p>
                     </div>
                     <div class="card">
-                        <div class="icon">👆</div>
-                        <h3>触摸滑动</h3>
-                        <p>移动端左右滑动</p>
+                        <div class="icon">📱</div>
+                        <h3>Jupyter 转换</h3>
+                        <p>Notebook 在线查看</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 6: Animation Showcase -->
+        <!-- Slide 6: Highlights -->
         <div class="slide" data-index="5">
             <div class="bg-decoration" style="width:500px;height:500px;background:linear-gradient(135deg,#60a5fa,#a78bfa);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
             <div class="slide-content slide-animate" style="position:relative;z-index:1;">
-                <h1 style="font-size:clamp(1.8rem,4vw,3rem);"><span style="background:rgba(0,0,0,0.3);padding:8px 24px;border-radius:12px;backdrop-filter:blur(10px);">动画展示</span></h1>
+                <h1 style="font-size:clamp(1.8rem,4vw,3rem);"><span style="background:rgba(0,0,0,0.3);padding:8px 24px;border-radius:12px;backdrop-filter:blur(10px);">项目亮点</span></h1>
                 <div style="display:flex;gap:30px;justify-content:center;margin-top:50px;flex-wrap:wrap;">
                     <div style="width:80px;height:80px;border-radius:16px;background:linear-gradient(135deg,#60a5fa,#3b82f6);animation:float 2.5s ease-in-out infinite;"></div>
                     <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#8b5cf6);animation:pulse 2s ease-in-out infinite;"></div>
                     <div style="width:80px;height:80px;border-radius:16px;background:linear-gradient(135deg,#f472b6,#ec4899);animation:rotate 6s linear infinite;"></div>
                     <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#34d399,#10b981);animation:float 3s ease-in-out infinite reverse;"></div>
                 </div>
-                <p class="sub-text" style="margin-top:40px;color:#e2e8f0;text-shadow:0 2px 10px rgba(0,0,0,0.5);">浮动 · 脉冲 · 旋转 · 多种动画效果</p>
+                <p class="sub-text" style="margin-top:40px;color:#e2e8f0;text-shadow:0 2px 10px rgba(0,0,0,0.5);">滚动动画 · 悬停效果 · 渐变色彩 · 毛玻璃</p>
             </div>
         </div>
 
@@ -532,8 +559,8 @@
             <div class="slide-content slide-animate">
                 <div class="pulse-icon" style="font-size:5rem;margin-bottom:20px;">✨</div>
                 <h1><span class="gradient">感谢观看</span></h1>
-                <p>用代码创造无限可能</p>
-                <p class="sub-text" style="margin-top:40px;color:#64748b;font-size:0.95rem;">Made with ❤️ using HTML + CSS + JavaScript</p>
+                <p>探索更多，请访问个人主页</p>
+                <p class="sub-text" style="margin-top:20px;color:#60a5fa;font-size:1rem;">kongjulaosima.github.io</p>
             </div>
         </div>
 
