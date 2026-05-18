@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM 学习笔记</title>
+    <title>大模型应用学习</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -59,7 +59,7 @@
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 12px; transition: all 0.3s;
-            text-decoration: none; color: inherit;
+            cursor: pointer;
         }
         .lesson-item:hover {
             background: rgba(96, 165, 250, 0.1);
@@ -75,6 +75,33 @@
             font-size: 0.75rem; font-weight: 600;
             background: rgba(96, 165, 250, 0.2); color: #60a5fa;
         }
+
+        /* Notebook Viewer Modal */
+        .viewer-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95); z-index: 1000;
+            justify-content: center; align-items: center;
+        }
+        .viewer-modal.active { display: flex; }
+        .viewer-content {
+            width: 95%; height: 90%; background: #fff; border-radius: 12px;
+            overflow: hidden; position: relative;
+        }
+        .viewer-content iframe { width: 100%; height: 100%; border: none; }
+        .viewer-header {
+            position: absolute; top: 0; left: 0; right: 0;
+            background: rgba(10, 10, 15, 0.95); padding: 12px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); z-index: 10;
+        }
+        .viewer-title { color: #e2e8f0; font-size: 0.95rem; }
+        .viewer-close {
+            background: rgba(255, 255, 255, 0.1); border: none; color: #fff;
+            font-size: 1.2rem; width: 32px; height: 32px; border-radius: 50%;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .viewer-close:hover { background: rgba(255, 255, 255, 0.2); }
+        .viewer-iframe { width: 100%; height: 100%; border: none; padding-top: 50px; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -102,9 +129,21 @@
             <li><a href="contact.html">联系</a></li>
         </ul>
     </nav>
+
+    <!-- Notebook Viewer Modal -->
+    <div class="viewer-modal" id="viewerModal">
+        <div class="viewer-content">
+            <div class="viewer-header">
+                <span class="viewer-title" id="viewerTitle">Notebook</span>
+                <button class="viewer-close" onclick="closeViewer()">✕</button>
+            </div>
+            <iframe class="viewer-iframe" id="viewerIframe" src=""></iframe>
+        </div>
+    </div>
+
     <div class="content">
         <section id="llm-learn">
-            <h2 class="section-title"><span>LLM 学习笔记</span></h2>
+            <h2 class="section-title"><span>大模型应用学习</span></h2>
             <p class="subtitle">大模型应用开发实战课程 - 从零到一构建智能应用</p>
 
             <!-- Chapter 2 -->
@@ -119,46 +158,46 @@
                     <div class="chapter-arrow">›</div>
                 </div>
                 <div class="lesson-list">
-                    <a href="LLM_learn/2构造问答系统/2_1_用大模型构建新人答疑机器人.ipynb" class="lesson-item">
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/2_1_用大模型构建新人答疑机器人.html', '2.1 用大模型构建新人答疑机器人')">
                         <div class="lesson-icon">📚</div>
                         <div class="lesson-info">
                             <div class="lesson-title">2.1 用大模型构建新人答疑机器人</div>
                             <div class="lesson-desc">搭建基础问答系统，实现智能答疑</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/2构造问答系统/2_2_扩展答疑机器人的知识范围.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/2_2_扩展答疑机器人的知识范围.html', '2.2 扩展答疑机器人的知识范围')">
                         <div class="lesson-icon">📖</div>
                         <div class="lesson-info">
                             <div class="lesson-title">2.2 扩展答疑机器人的知识范围</div>
                             <div class="lesson-desc">扩展知识库，提升回答覆盖面</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/2构造问答系统/2_3_优化提示词改善答疑机器人回答质量.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/2_3_优化提示词改善答疑机器人回答质量.html', '2.3 优化提示词改善回答质量')">
                         <div class="lesson-icon">✨</div>
                         <div class="lesson-info">
                             <div class="lesson-title">2.3 优化提示词改善回答质量</div>
                             <div class="lesson-desc">Prompt Engineering 优化技巧</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/2构造问答系统/2_4_自动化评测答疑机器人的表现.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/2_4_自动化评测答疑机器人的表现.html', '2.4 自动化评测答疑机器人的表现')">
                         <div class="lesson-icon">📊</div>
                         <div class="lesson-info">
                             <div class="lesson-title">2.4 自动化评测答疑机器人的表现</div>
                             <div class="lesson-desc">构建评测体系，量化回答质量</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/2构造问答系统/2_5_优化RAG应用提升问答准确度.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/2_5_优化RAG应用提升问答准确度.html', '2.5 优化RAG应用提升问答准确度')">
                         <div class="lesson-icon">🔧</div>
                         <div class="lesson-info">
                             <div class="lesson-title">2.5 优化RAG应用提升问答准确度</div>
                             <div class="lesson-desc">RAG 优化策略与实践</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
+                        <div class="lesson-badge">查看</div>
+                    </div>
                 </div>
             </div>
 
@@ -174,70 +213,70 @@
                     <div class="chapter-arrow">›</div>
                 </div>
                 <div class="lesson-list">
-                    <a href="LLM_learn/3构造Agent系统/3_0_从回答问题到解决问题.ipynb" class="lesson-item">
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/3_0_从回答问题到解决问题.html', '3.0 从回答问题到解决问题')">
                         <div class="lesson-icon">💡</div>
                         <div class="lesson-info">
                             <div class="lesson-title">3.0 从回答问题到解决问题</div>
                             <div class="lesson-desc">Agent 系统概述与设计思路</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/3构造Agent系统/3_1_Agent基础与工具调用.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/3_1_Agent基础与工具调用.html', '3.1 Agent基础与工具调用')">
                         <div class="lesson-icon">🔧</div>
                         <div class="lesson-info">
                             <div class="lesson-title">3.1 Agent基础与工具调用</div>
                             <div class="lesson-desc">Function Calling + ReAct + MCP</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/3构造Agent系统/3_2_让Agent学会规划与执行.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/3_2_让Agent学会规划与执行.html', '3.2 让Agent学会规划与执行')">
                         <div class="lesson-icon">📋</div>
                         <div class="lesson-info">
                             <div class="lesson-title">3.2 让Agent学会规划与执行</div>
                             <div class="lesson-desc">反思 + 工作流 + 自主规划</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/3构造Agent系统/3_3_用多Agent实现团队协作.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/3_3_用多Agent实现团队协作.html', '3.3 用多Agent实现团队协作')">
                         <div class="lesson-icon">👥</div>
                         <div class="lesson-info">
                             <div class="lesson-title">3.3 用多Agent实现团队协作</div>
                             <div class="lesson-desc">多智能体分工协作</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/3构造Agent系统/3_4_用Memory让Agent积累经验.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/3_4_用Memory让Agent积累经验.html', '3.4 用Memory让Agent积累经验')">
                         <div class="lesson-icon">🧠</div>
                         <div class="lesson-info">
                             <div class="lesson-title">3.4 用Memory让Agent积累经验</div>
                             <div class="lesson-desc">短期/长期记忆 + 主动记忆管理</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/3构造Agent系统/3_5_用Skill将能力固化为可复用流程.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/3_5_用Skill将能力固化为可复用流程.html', '3.5 用Skill将能力固化为可复用流程')">
                         <div class="lesson-icon">⚡</div>
                         <div class="lesson-info">
                             <div class="lesson-title">3.5 用Skill将能力固化为可复用流程</div>
                             <div class="lesson-desc">从Prompt到Skill的演进</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/3构造Agent系统/3_6_用评测驱动Agent开发.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/3_6_用评测驱动Agent开发.html', '3.6 用评测驱动Agent开发')">
                         <div class="lesson-icon">📈</div>
                         <div class="lesson-info">
                             <div class="lesson-title">3.6 用评测驱动Agent开发</div>
                             <div class="lesson-desc">端到端 + 白盒化评测</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/3构造Agent系统/3_7_Qwen_Code实践.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/3_7_Qwen_Code实践.html', '3.7 Qwen Code 实践')">
                         <div class="lesson-icon">💻</div>
                         <div class="lesson-info">
                             <div class="lesson-title">3.7 Qwen Code 实践</div>
                             <div class="lesson-desc">掌握Coding Agent的日常工作方式</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
+                        <div class="lesson-badge">查看</div>
+                    </div>
                 </div>
             </div>
 
@@ -253,46 +292,46 @@
                     <div class="chapter-arrow">›</div>
                 </div>
                 <div class="lesson-list">
-                    <a href="LLM_learn/4交付上线/4_0_走向生产环境.ipynb" class="lesson-item">
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/4_0_走向生产环境.html', '4.0 走向生产环境')">
                         <div class="lesson-icon">🎯</div>
                         <div class="lesson-info">
                             <div class="lesson-title">4.0 走向生产环境</div>
                             <div class="lesson-desc">生产环境挑战与准备</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/4交付上线/4_1_用蒸馏让小模型掌握专业能力.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/4_1_用蒸馏让小模型掌握专业能力.html', '4.1 用蒸馏让小模型掌握专业能力')">
                         <div class="lesson-icon">🧪</div>
                         <div class="lesson-info">
                             <div class="lesson-title">4.1 用蒸馏让小模型掌握专业能力</div>
                             <div class="lesson-desc">模型蒸馏实战</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/4交付上线/4_2_部署模型.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/4_2_部署模型.html', '4.2 部署模型')">
                         <div class="lesson-icon">⚙️</div>
                         <div class="lesson-info">
                             <div class="lesson-title">4.2 部署模型</div>
                             <div class="lesson-desc">模型部署与推理服务</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/4交付上线/4_3_大模型应用生产实践.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/4_3_大模型应用生产实践.html', '4.3 大模型应用生产实践')">
                         <div class="lesson-icon">🏭</div>
                         <div class="lesson-info">
                             <div class="lesson-title">4.3 大模型应用生产实践</div>
                             <div class="lesson-desc">生产环境最佳实践</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/4交付上线/4_4_大模型应用安全合规.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/4_4_大模型应用安全合规.html', '4.4 大模型应用安全合规')">
                         <div class="lesson-icon">🔒</div>
                         <div class="lesson-info">
                             <div class="lesson-title">4.4 大模型应用安全合规</div>
                             <div class="lesson-desc">安全防护与合规要求</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
+                        <div class="lesson-badge">查看</div>
+                    </div>
                 </div>
             </div>
 
@@ -303,27 +342,27 @@
                     <div class="chapter-info">
                         <div class="chapter-number">CHAPTER 05</div>
                         <div class="chapter-title">总结与展望</div>
-                        <div class="lesson-desc">回顾学习历程，展望AI未来</div>
+                        <div class="chapter-desc">回顾学习历程，展望AI未来</div>
                     </div>
                     <div class="chapter-arrow">›</div>
                 </div>
                 <div class="lesson-list">
-                    <a href="LLM_learn/5总结与展望/5_1_培养品味用AI为业务提效.ipynb" class="lesson-item">
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/5_1_培养品味用AI为业务提效.html', '5.1 培养品味用AI为业务提效')">
                         <div class="lesson-icon">🎨</div>
                         <div class="lesson-info">
                             <div class="lesson-title">5.1 培养品味用AI为业务提效</div>
                             <div class="lesson-desc">AI赋能业务的实际案例</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
-                    <a href="LLM_learn/5总结与展望/5_2_总结与展望.ipynb" class="lesson-item">
+                        <div class="lesson-badge">查看</div>
+                    </div>
+                    <div class="lesson-item" onclick="openViewer('LLM_learn/html/5_2_总结与展望.html', '5.2 总结与展望')">
                         <div class="lesson-icon">🔮</div>
                         <div class="lesson-info">
                             <div class="lesson-title">5.2 总结与展望</div>
                             <div class="lesson-desc">课程总结与技术展望</div>
                         </div>
-                        <div class="lesson-badge">Notebook</div>
-                    </a>
+                        <div class="lesson-badge">查看</div>
+                    </div>
                 </div>
             </div>
 
@@ -333,7 +372,6 @@
     <script>
         function toggleChapter(header) {
             const lessonList = header.nextElementSibling;
-            const isExpanded = header.classList.contains('expanded');
 
             // Close all other chapters
             document.querySelectorAll('.chapter-header.expanded').forEach(h => {
@@ -347,6 +385,30 @@
             header.classList.toggle('expanded');
             lessonList.classList.toggle('show');
         }
+
+        function openViewer(url, title) {
+            const modal = document.getElementById('viewerModal');
+            const iframe = document.getElementById('viewerIframe');
+            const titleEl = document.getElementById('viewerTitle');
+
+            titleEl.textContent = title;
+            iframe.src = url;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeViewer() {
+            const modal = document.getElementById('viewerModal');
+            const iframe = document.getElementById('viewerIframe');
+
+            modal.classList.remove('active');
+            iframe.src = '';
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeViewer();
+        });
 
         (function() {
             const canvas = document.getElementById('particle-canvas');
