@@ -272,176 +272,6 @@
             transform: translateX(0);
         }
 
-        /* About Section */
-        .about-content { max-width: 800px; text-align: center; }
-
-        .about-content p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #cbd5e1;
-            margin-bottom: 16px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
-        }
-
-        .about-content p.visible { opacity: 1; transform: translateY(0); }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            margin-top: 50px;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
-        }
-
-        .stat-item.visible { opacity: 1; transform: translateY(0); }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #60a5fa;
-        }
-
-        .stat-label {
-            color: #94a3b8;
-            margin-top: 8px;
-            font-size: 0.95rem;
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 20px;
-            max-width: 700px;
-            width: 100%;
-        }
-
-        .skill-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 24px 16px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card.visible { opacity: 1; transform: translateY(0); }
-
-        .skill-card:hover {
-            border-color: #60a5fa;
-            transform: translateY(-5px) scale(1.02) !important;
-            box-shadow: 0 8px 30px rgba(96, 165, 250, 0.15);
-        }
-
-        .skill-icon { font-size: 2.5rem; margin-bottom: 12px; }
-        .skill-name { font-size: 0.95rem; color: #e2e8f0; font-weight: 500; }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            max-width: 900px;
-            width: 100%;
-        }
-
-        .project-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 32px;
-            opacity: 0;
-            transform: translateY(20px) scale(0.95);
-            transition: all 0.5s ease;
-        }
-
-        .project-card.visible { opacity: 1; transform: translateY(0) scale(1); }
-
-        .project-card:hover {
-            border-color: #a78bfa;
-            transform: translateY(-8px) scale(1.02) !important;
-            box-shadow: 0 20px 40px rgba(167, 139, 250, 0.2);
-        }
-
-        .project-card h3 { font-size: 1.2rem; margin-bottom: 12px; color: #e2e8f0; }
-        .project-card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; }
-
-        .project-tags {
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-            flex-wrap: wrap;
-        }
-
-        .project-tags span {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            background: rgba(96, 165, 250, 0.15);
-            color: #60a5fa;
-        }
-
-        /* Contact Section */
-        .contact-content { text-align: center; max-width: 600px; }
-
-        .contact-content p {
-            color: #94a3b8;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 40px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
-        }
-
-        .contact-content p.visible { opacity: 1; transform: translateY(0); }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease 0.2s;
-        }
-
-        .contact-links.visible { opacity: 1; transform: translateY(0); }
-
-        .contact-links a {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #e2e8f0;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-        }
-
-        .contact-links a:hover {
-            border-color: #60a5fa;
-            background: rgba(96, 165, 250, 0.1);
-            transform: translateY(-3px);
-        }
-
         footer {
             text-align: center;
             padding: 30px;
@@ -617,13 +447,10 @@
     <nav class="nav-bar" id="navbar">
         <span class="nav-logo">✦ Home</span>
         <ul class="nav-links" id="navLinks">
-            <li><a href="#explore">探索</a></li>
-            <li><a href="#about">关于</a></li>
-            <li><a href="#skills">技能</a></li>
-            <li><a href="#projects">项目</a></li>
             <li><a href="papers.html">论文学习</a></li>
             <li><a href="llm_learn.html">大模型学习</a></li>
-            <li><a href="#contact">联系</a></li>
+            <li><a href="about.html">关于</a></li>
+            <li><a href="contact.html">联系</a></li>
         </ul>
     </nav>
 
@@ -638,7 +465,7 @@
             <p class="hero-subtitle">热爱编程，热衷于用代码创造美好的数字体验。<br>专注于 Web 开发、人工智能与创意编程。</p>
             <div class="cta">
                 <a href="#explore" class="btn-primary">✨ 探索我的世界</a>
-                <a href="#about" class="btn-secondary">👋 了解更多</a>
+                <a href="about.html" class="btn-secondary">👋 了解更多</a>
             </div>
             <div class="scroll-indicator">
                 <span>向下滚动</span>
@@ -746,78 +573,6 @@
                     </div>
                     <div class="nav-card-arrow">→</div>
                 </a>
-            </div>
-        </section>
-
-        <section id="about">
-            <h2 class="section-title"><span>关于我</span></h2>
-            <p class="section-desc">热爱技术，追求卓越</p>
-            <div class="about-content">
-                <p>我是一名充满热情的全栈开发者，拥有丰富的 Web 应用开发和深度学习经验。</p>
-                <p>我相信技术的力量可以改变世界，始终保持好奇心和学习热情，探索前沿技术并应用于实际项目。</p>
-                <p>在工作之余，我喜欢参与开源项目、撰写技术博客，以及在各种编程社区中分享知识。</p>
-                <div class="stats">
-                    <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="5">0</span>+</div>
-                        <div class="stat-label">项目经验</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number"><span class="counter" data-target="3">0</span>+</div>
-                        <div class="stat-label">技术方向</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">∞</div>
-                        <div class="stat-label">学习热情</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills">
-            <h2 class="section-title"><span>技术技能</span></h2>
-            <p class="section-desc">持续学习，不断进步</p>
-            <div class="skills-grid">
-                <div class="skill-card"><div class="skill-icon">🐍</div><div class="skill-name">Python</div></div>
-                <div class="skill-card"><div class="skill-icon">⚡</div><div class="skill-name">FastAPI</div></div>
-                <div class="skill-card"><div class="skill-icon">🤖</div><div class="skill-name">LLM</div></div>
-                <div class="skill-card"><div class="skill-icon">📚</div><div class="skill-name">RAG</div></div>
-                <div class="skill-card"><div class="skill-icon">🧠</div><div class="skill-name">Agent</div></div>
-                <div class="skill-card"><div class="skill-icon">⚛️</div><div class="skill-name">React</div></div>
-            </div>
-        </section>
-
-        <section id="projects">
-            <h2 class="section-title"><span>项目展示</span></h2>
-            <p class="section-desc">用代码创造价值</p>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>智能数据分析平台</h3>
-                    <p>基于机器学习的数据分析平台，支持自动数据清洗、可视化和预测分析。</p>
-                    <div class="project-tags"><span>Python</span><span>React</span><span>TensorFlow</span></div>
-                </div>
-                <div class="project-card">
-                    <h3>实时协作白板</h3>
-                    <p>支持多人实时协作的在线白板应用，基于 WebSocket 实现毫秒级同步。</p>
-                    <div class="project-tags"><span>Node.js</span><span>Canvas</span><span>WebSocket</span></div>
-                </div>
-                <div class="project-card">
-                    <h3>ScholarClub</h3>
-                    <p>学术社区平台，支持论文分享、学术讨论和研究协作。</p>
-                    <div class="project-tags"><span>Python</span><span>FastAPI</span><span>RAG</span></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact">
-            <h2 class="section-title"><span>联系我</span></h2>
-            <p class="section-desc">期待与你交流</p>
-            <div class="contact-content">
-                <p>如果你对我的项目感兴趣，或者有任何合作想法，欢迎随时联系我！</p>
-                <div class="contact-links">
-                    <a href="#">📧 Email</a>
-                    <a href="#">💻 GitHub</a>
-                    <a href="#">📱 微信</a>
-                </div>
             </div>
         </section>
 
@@ -965,7 +720,7 @@
                 });
             }, { threshold: 0.15 });
 
-            document.querySelectorAll('.section-title, .section-desc, .about-content p, .stat-item, .skill-card, .project-card, .nav-card, .contact-content p, .contact-links').forEach(el => {
+            document.querySelectorAll('.section-title, .section-desc, .nav-card').forEach(el => {
                 observer.observe(el);
             });
 
@@ -983,41 +738,11 @@
             document.querySelectorAll('.nav-links a').forEach(a => {
                 a.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const href = a.getAttribute('href');
-                    if (href.endsWith('.html')) {
-                        window.location.href = href;
-                    } else {
-                        const target = document.querySelector(href);
-                        if (target) target.scrollIntoView({ behavior: 'smooth' });
-                    }
+                    window.location.href = a.getAttribute('href');
                 });
             });
         })();
 
-        // Counter Animation
-        (function() {
-            const counters = document.querySelectorAll('.counter');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const target = parseInt(entry.target.dataset.target);
-                        let current = 0;
-                        const increment = target / 30;
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= target) {
-                                entry.target.textContent = target;
-                                clearInterval(timer);
-                            } else {
-                                entry.target.textContent = Math.floor(current);
-                            }
-                        }, 50);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-            counters.forEach(counter => observer.observe(counter));
-        })();
     </script>
 
 </body>
