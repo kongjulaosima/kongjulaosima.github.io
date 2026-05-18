@@ -67,6 +67,76 @@
         .file-btn.view:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(96, 165, 250, 0.3); }
         .file-btn.download { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); color: #94a3b8; }
         .file-btn.download:hover { border-color: #60a5fa; color: #60a5fa; transform: translateY(-2px); }
+        .file-btn.detail { background: linear-gradient(135deg, #a78bfa, #8b5cf6); color: #fff; }
+        .file-btn.detail:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(167, 139, 250, 0.3); }
+
+        /* DeepSeek V4 Detail Section */
+        .detail-section { display: none; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .detail-section.show { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .detail-header { text-align: center; margin-bottom: 40px; }
+        .detail-header h3 { font-size: 1.8rem; color: #e2e8f0; margin-bottom: 12px; }
+        .detail-header p { color: #94a3b8; font-size: 0.95rem; }
+
+        .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+        .metric-card { background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.2); border-radius: 12px; padding: 20px; text-align: center; }
+        .metric-value { font-size: 2rem; font-weight: 700; color: #60a5fa; font-family: monospace; }
+        .metric-label { font-size: 0.85rem; color: #94a3b8; margin-top: 4px; }
+
+        .models-detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 40px; }
+        .model-detail-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 24px; }
+        .model-detail-card.pro { border-color: #60a5fa; border-width: 2px; }
+        .model-badge-detail { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; background: rgba(96, 165, 250, 0.2); color: #60a5fa; margin-bottom: 12px; }
+        .model-detail-card.pro .model-badge-detail { background: #60a5fa; color: #fff; }
+        .model-name-detail { font-size: 1.4rem; color: #e2e8f0; font-weight: 600; margin-bottom: 8px; }
+        .model-desc-detail { color: #94a3b8; font-size: 0.9rem; margin-bottom: 16px; line-height: 1.6; }
+        .specs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .spec-item { background: rgba(96, 165, 250, 0.1); padding: 10px; border-radius: 8px; }
+        .spec-label { font-size: 0.75rem; color: #64748b; margin-bottom: 2px; }
+        .spec-value { font-size: 1rem; font-weight: 600; color: #60a5fa; font-family: monospace; }
+
+        .innovations-detail-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        .innovation-detail-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 20px; text-align: center; }
+        .innovation-icon-detail { width: 48px; height: 48px; background: rgba(96, 165, 250, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-family: monospace; font-size: 0.9rem; font-weight: 600; color: #60a5fa; }
+        .innovation-title-detail { font-size: 1rem; color: #e2e8f0; font-weight: 600; margin-bottom: 8px; }
+        .innovation-desc-detail { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
+
+        .benchmark-detail-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
+        .benchmark-detail-table th { background: rgba(96, 165, 250, 0.2); padding: 12px; text-align: left; color: #60a5fa; font-weight: 600; border-bottom: 2px solid rgba(96, 165, 250, 0.3); }
+        .benchmark-detail-table th:not(:first-child) { text-align: center; }
+        .benchmark-detail-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); color: #cbd5e1; }
+        .benchmark-detail-table td:not(:first-child) { text-align: center; font-family: monospace; }
+        .benchmark-detail-table tr:hover { background: rgba(96, 165, 250, 0.1); }
+        .benchmark-highlight { color: #60a5fa; font-weight: 600; }
+
+        .limitations-detail-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        .limitation-detail-card { background: rgba(255, 255, 255, 0.05); border-left: 4px solid #60a5fa; border-radius: 0 12px 12px 0; padding: 20px; }
+        .limitation-icon-detail { font-size: 1.5rem; margin-bottom: 10px; }
+        .limitation-title-detail { font-size: 1rem; color: #e2e8f0; font-weight: 600; margin-bottom: 6px; }
+        .limitation-desc-detail { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
+
+        .pricing-detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
+        .pricing-detail-card { background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .pricing-detail-card.featured { border-color: #60a5fa; border-width: 2px; }
+        .pricing-model-detail { font-size: 1.2rem; color: #e2e8f0; font-weight: 600; margin-bottom: 6px; }
+        .pricing-type-detail { font-size: 0.8rem; color: #64748b; margin-bottom: 16px; }
+        .pricing-amount-detail { font-size: 1.8rem; font-weight: 700; color: #60a5fa; font-family: monospace; }
+        .pricing-unit-detail { font-size: 0.85rem; color: #94a3b8; }
+        .pricing-info-detail { margin-top: 12px; font-size: 0.8rem; color: #64748b; line-height: 1.5; }
+
+        .savings-note-detail { text-align: center; padding: 16px; background: rgba(96, 165, 250, 0.1); border-radius: 10px; margin-bottom: 40px; }
+        .savings-note-detail p { color: #94a3b8; font-size: 0.9rem; }
+        .savings-note-detail strong { color: #60a5fa; }
+
+        .agent-detail-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+        .agent-detail-card { background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .agent-name-detail { font-size: 1rem; color: #e2e8f0; font-weight: 600; margin-bottom: 6px; }
+        .agent-desc-detail { font-size: 0.8rem; color: #94a3b8; }
+
+        .quote-detail-section { text-align: center; padding: 40px; background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.2)); border-radius: 16px; margin-bottom: 20px; }
+        .quote-text-detail { font-size: 1.8rem; color: #e2e8f0; margin-bottom: 8px; letter-spacing: 2px; }
+        .quote-source-detail { font-size: 0.9rem; color: #94a3b8; }
 
         /* Footer */
         footer { text-align: center; padding: 40px; color: #475569; font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
@@ -105,7 +175,7 @@
             <li><a href="projects.html">项目</a></li>
             <li><a href="hobbies.html">兴趣爱好</a></li>
             <li><a href="papers.html" class="active">大模型论文学习</a></li>
-            <li><a href="llm_learn.html">LLM学习</a></li>
+            <li><a href="llm_learn.html">大模型应用学习</a></li>
             <li><a href="presentation.html">演示文稿</a></li>
             <li><a href="contact.html">联系</a></li>
         </ul>
@@ -164,6 +234,181 @@
                                 <a href="papers/deepseekV4.docx" download class="file-btn download">⬇️</a>
                             </div>
                         </div>
+                        <div class="file-row">
+                            <span class="file-icon">📊</span>
+                            <div class="file-info">
+                                <div class="file-name">详细技术报告</div>
+                                <div class="file-size">在线查看</div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="file-btn detail" onclick="toggleDeepSeekDetail()">📋 查看详细报告</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DeepSeek V4 Detail Section -->
+                <div class="detail-section" id="deepseekDetail">
+                    <div class="detail-header">
+                        <h3>DeepSeek V4 技术报告详解</h3>
+                        <p>2026年4月24日发布 · MIT开源协议 · 从零设计的百万上下文架构</p>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-value">1M</div>
+                            <div class="metric-label">原生上下文窗口</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">27%</div>
+                            <div class="metric-label">推理FLOPs（vs V3.2）</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">10%</div>
+                            <div class="metric-label">KV Cache（vs V3.2）</div>
+                        </div>
+                    </div>
+
+                    <h4 style="color: #e2e8f0; font-size: 1.3rem; margin-bottom: 20px; text-align: center;">两个模型：旗舰与高效</h4>
+                    <div class="models-detail-grid">
+                        <div class="model-detail-card pro">
+                            <span class="model-badge-detail">旗舰</span>
+                            <div class="model-name-detail">DeepSeek-V4-Pro</div>
+                            <p class="model-desc-detail">性能对标世界顶级闭源模型。适合复杂代码推理、高阶数学、长程Agent任务。训练数据33T tokens。</p>
+                            <div class="specs-grid">
+                                <div class="spec-item"><div class="spec-label">总参数量</div><div class="spec-value">1.6T</div></div>
+                                <div class="spec-item"><div class="spec-label">激活参数</div><div class="spec-value">49B</div></div>
+                                <div class="spec-item"><div class="spec-label">上下文</div><div class="spec-value">1M tokens</div></div>
+                                <div class="spec-item"><div class="spec-label">磁盘体积</div><div class="spec-value">862 GB</div></div>
+                            </div>
+                        </div>
+                        <div class="model-detail-card">
+                            <span class="model-badge-detail">高效</span>
+                            <div class="model-name-detail">DeepSeek-V4-Flash</div>
+                            <p class="model-desc-detail">极致推理效率，高吞吐低成本。简单Agent任务与Pro旗鼓相当，是日常API调用的首选模型。</p>
+                            <div class="specs-grid">
+                                <div class="spec-item"><div class="spec-label">总参数量</div><div class="spec-value">284B</div></div>
+                                <div class="spec-item"><div class="spec-label">激活参数</div><div class="spec-value">13B</div></div>
+                                <div class="spec-item"><div class="spec-label">上下文</div><div class="spec-value">1M tokens</div></div>
+                                <div class="spec-item"><div class="spec-label">磁盘体积</div><div class="spec-value">160 GB</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 style="color: #e2e8f0; font-size: 1.3rem; margin-bottom: 20px; text-align: center;">四项架构创新</h4>
+                    <div class="innovations-detail-grid">
+                        <div class="innovation-detail-card">
+                            <div class="innovation-icon-detail">mHC</div>
+                            <div class="innovation-title-detail">mHC残差连接</div>
+                            <p class="innovation-desc-detail">Manifold-Constrained Hyper-Connections，将残差映射约束在双随机矩阵的Birkhoff多面体流形上，保证谱范数有界、传播非膨胀。</p>
+                        </div>
+                        <div class="innovation-detail-card">
+                            <div class="innovation-icon-detail">CSA</div>
+                            <div class="innovation-title-detail">CSA稀疏注意力</div>
+                            <p class="innovation-desc-detail">Compressed Sparse Attention。先以4:1压缩KV，再用indexer query heads选出最相关的512个压缩entry计算稀疏注意力。</p>
+                        </div>
+                        <div class="innovation-detail-card">
+                            <div class="innovation-icon-detail">HCA</div>
+                            <div class="innovation-title-detail">HCA稠密注意力</div>
+                            <p class="innovation-desc-detail">Heavily Compressed Attention。以128:1超高压缩比聚合远距离背景信息，配合CSA实现"精读+略读"的混合注意力策略。</p>
+                        </div>
+                        <div class="innovation-detail-card">
+                            <div class="innovation-icon-detail">FP4</div>
+                            <div class="innovation-title-detail">FP4 QAT量化</div>
+                            <p class="innovation-desc-detail">MoE expert权重采用FP4量化感知训练，非expert参数保持FP8。KV Cache以FP8为主，单卡推理吞吐量大幅提升。</p>
+                        </div>
+                    </div>
+
+                    <h4 style="color: #e2e8f0; font-size: 1.3rem; margin-bottom: 20px; text-align: center;">Benchmark 对标</h4>
+                    <div style="overflow-x: auto; margin-bottom: 40px;">
+                        <table class="benchmark-detail-table">
+                            <tr><th>基准测试</th><th>DeepSeek V4-Pro</th><th>Claude Opus 4.6</th><th>GPT-5.4 xHigh</th><th>Gemini 3.1 Pro</th></tr>
+                            <tr><td>MMLU-Pro</td><td class="benchmark-highlight">87.5</td><td>89.1</td><td>87.5</td><td>91.0</td></tr>
+                            <tr><td>SimpleQA Verified</td><td class="benchmark-highlight">57.9</td><td>46.2</td><td>45.3</td><td>75.6</td></tr>
+                            <tr><td>GPQA Diamond</td><td class="benchmark-highlight">90.1</td><td>91.3</td><td>93.0</td><td>94.3</td></tr>
+                            <tr><td>HLE</td><td class="benchmark-highlight">37.7</td><td>40.0</td><td>39.8</td><td>44.4</td></tr>
+                            <tr><td>LiveCodeBench</td><td class="benchmark-highlight">93.5</td><td>88.8</td><td>—</td><td>91.7</td></tr>
+                            <tr><td>SWE-Bench Verified</td><td class="benchmark-highlight">80.6</td><td>—</td><td>—</td><td>—</td></tr>
+                            <tr><td>Terminal-Bench 2.0</td><td class="benchmark-highlight">67.9</td><td>—</td><td>82.7</td><td>—</td></tr>
+                            <tr><td>Codeforces Rating</td><td class="benchmark-highlight">3206</td><td>—</td><td>3168</td><td>—</td></tr>
+                        </table>
+                    </div>
+
+                    <h4 style="color: #e2e8f0; font-size: 1.3rem; margin-bottom: 20px; text-align: center;">诚实审视</h4>
+                    <div class="limitations-detail-grid">
+                        <div class="limitation-detail-card">
+                            <div class="limitation-icon-detail">🎯</div>
+                            <div class="limitation-title-detail">品味差距</div>
+                            <p class="limitation-desc-detail">长对话的风格一致性和节奏把控与Claude、GPT仍有肉眼可见的差距。输出偶有"机翻感"，创意写作不够丝滑。</p>
+                        </div>
+                        <div class="limitation-detail-card">
+                            <div class="limitation-icon-detail">🧠</div>
+                            <div class="limitation-title-detail">Agent短板</div>
+                            <p class="limitation-desc-detail">Terminal-Bench 2.0仅67.9%，GPT-5.5达到82.7%。高难度复杂多步任务的稳定性不足，容易出现上下文漂移。</p>
+                        </div>
+                        <div class="limitation-detail-card">
+                            <div class="limitation-icon-detail">🌍</div>
+                            <div class="limitation-title-detail">知识广度</div>
+                            <p class="limitation-desc-detail">SimpleQA 57.9%虽大幅领先Opus和GPT，但Gemini 3.1 Pro高达75.6%。冷门领域和长尾知识仍然容易产生幻觉。</p>
+                        </div>
+                        <div class="limitation-detail-card">
+                            <div class="limitation-icon-detail">✍️</div>
+                            <div class="limitation-title-detail">本分姿态</div>
+                            <p class="limitation-desc-detail">技术报告没有藏着掖着，各项局限写得清清楚楚。开源1.6T权重+完整训练代码+详实的失败实验记录。</p>
+                        </div>
+                    </div>
+
+                    <h4 style="color: #e2e8f0; font-size: 1.3rem; margin-bottom: 20px; text-align: center;">定价（人民币）</h4>
+                    <div class="pricing-detail-grid">
+                        <div class="pricing-detail-card">
+                            <div class="pricing-model-detail">V4-Flash</div>
+                            <div class="pricing-type-detail">普惠首选 · 适合大规模调用</div>
+                            <div class="pricing-amount-detail">¥1</div>
+                            <div class="pricing-unit-detail">输入（缓存未命中）</div>
+                            <div class="pricing-info-detail">输出 ¥2/百万tokens<br>缓存命中 ¥0.2/百万tokens</div>
+                        </div>
+                        <div class="pricing-detail-card featured">
+                            <div class="pricing-model-detail">V4-Pro</div>
+                            <div class="pricing-type-detail">性能旗舰 · 适合高难度任务</div>
+                            <div class="pricing-amount-detail">¥12</div>
+                            <div class="pricing-unit-detail">输入（缓存未命中）</div>
+                            <div class="pricing-info-detail">输出 ¥24/百万tokens<br>缓存命中 ¥1.2/百万tokens</div>
+                        </div>
+                        <div class="pricing-detail-card">
+                            <div class="pricing-model-detail">闭源参考</div>
+                            <div class="pricing-type-detail">GPT-5.5 Pro / Opus 4.7</div>
+                            <div class="pricing-amount-detail">¥17~1290</div>
+                            <div class="pricing-unit-detail">输入 ¥17.5+ / 输出 ¥105+</div>
+                            <div class="pricing-info-detail">V4-Pro仅为GPT的 <strong style="color:#60a5fa">1/7~1/50</strong></div>
+                        </div>
+                    </div>
+                    <div class="savings-note-detail">
+                        <p>一个日均3000次调用的客服机器人：<strong>V4-Flash</strong> 月成本约 1,260 元，<strong>GPT-5.5</strong> 需 22,680 元。年成本差超 25 万元。</p>
+                    </div>
+
+                    <h4 style="color: #e2e8f0; font-size: 1.3rem; margin-bottom: 20px; text-align: center;">生态适配</h4>
+                    <div class="agent-detail-grid">
+                        <div class="agent-detail-card">
+                            <div class="agent-name-detail">Claude Code</div>
+                            <div class="agent-desc-detail">Agentic编码与代码库级操作的全面适配</div>
+                        </div>
+                        <div class="agent-detail-card">
+                            <div class="agent-name-detail">OpenClaw</div>
+                            <div class="agent-desc-detail">开源Agent框架，支持复杂工具链编排</div>
+                        </div>
+                        <div class="agent-detail-card">
+                            <div class="agent-name-detail">OpenCode</div>
+                            <div class="agent-desc-detail">代码生成与审查流程的深度集成</div>
+                        </div>
+                        <div class="agent-detail-card">
+                            <div class="agent-name-detail">CodeBuddy</div>
+                            <div class="agent-desc-detail">轻量级编码助手，V4-Flash版本即可胜任</div>
+                        </div>
+                    </div>
+
+                    <div class="quote-detail-section">
+                        <div class="quote-text-detail">不诱于誉，不恐于诽</div>
+                        <div class="quote-source-detail">—— 荀子 · 非十二子</div>
                     </div>
                 </div>
             </div>
@@ -322,6 +567,14 @@
         }
 
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeViewer(); });
+
+        function toggleDeepSeekDetail() {
+            const detail = document.getElementById('deepseekDetail');
+            detail.classList.toggle('show');
+            if (detail.classList.contains('show')) {
+                detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
     </script>
 </body>
 </html>
