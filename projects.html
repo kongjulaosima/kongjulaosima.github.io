@@ -15,17 +15,31 @@
         .nav-links { display: flex; gap: 24px; list-style: none; }
         .nav-links a { color: #94a3b8; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
         .nav-links a:hover, .nav-links a.active { color: #60a5fa; }
-        .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 50px; text-align: center; opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 16px; text-align: center; opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
         .section-title.visible { opacity: 1; transform: translateY(0); }
         .section-title span { background: linear-gradient(135deg, #60a5fa, #a78bfa); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 900px; width: 100%; }
-        .project-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 32px; backdrop-filter: blur(10px); opacity: 0; transform: translateY(20px) scale(0.95); transition: all 0.5s ease; transform-style: preserve-3d; perspective: 1000px; }
-        .project-card.visible { opacity: 1; transform: translateY(0) scale(1); }
-        .project-card:hover { border-color: #a78bfa; transform: translateY(-8px) scale(1.02) rotateX(5deg) rotateY(-5deg); box-shadow: 0 20px 40px rgba(167, 139, 250, 0.2); }
-        .project-card h3 { font-size: 1.2rem; margin-bottom: 12px; color: #e2e8f0; }
-        .project-card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.6; }
-        .project-tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
-        .project-tags span { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; background: rgba(96, 165, 250, 0.15); color: #60a5fa; }
+        .section-desc { color: #94a3b8; font-size: 1.1rem; text-align: center; max-width: 600px; margin-bottom: 50px; opacity: 0; transform: translateY(20px); transition: all 0.6s ease 0.2s; }
+        .section-desc.visible { opacity: 1; transform: translateY(0); }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; max-width: 1000px; width: 100%; }
+        .project-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 32px; backdrop-filter: blur(10px); opacity: 0; transform: translateY(30px); transition: all 0.5s ease; position: relative; overflow: hidden; }
+        .project-card.visible { opacity: 1; transform: translateY(0); }
+        .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--card-gradient); opacity: 0; transition: opacity 0.3s; }
+        .project-card:hover { border-color: rgba(96, 165, 250, 0.3); transform: translateY(-8px); box-shadow: 0 20px 40px rgba(96, 165, 250, 0.15); }
+        .project-card:hover::before { opacity: 1; }
+        .project-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 20px; background: var(--icon-bg); }
+        .project-card h3 { font-size: 1.3rem; margin-bottom: 12px; color: #e2e8f0; font-weight: 600; }
+        .project-card p { color: #94a3b8; font-size: 0.95rem; line-height: 1.7; margin-bottom: 20px; }
+        .project-features { list-style: none; margin-bottom: 20px; }
+        .project-features li { color: #94a3b8; font-size: 0.9rem; padding: 6px 0; padding-left: 20px; position: relative; }
+        .project-features li::before { content: '✦'; position: absolute; left: 0; color: #60a5fa; font-size: 0.7rem; }
+        .project-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .project-tags span { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; background: rgba(96, 165, 250, 0.1); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.15); }
+        .project-links { display: flex; gap: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+        .project-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; text-decoration: none; transition: all 0.3s; }
+        .project-link.primary { background: linear-gradient(135deg, #60a5fa, #a78bfa); color: #fff; }
+        .project-link.primary:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(96, 165, 250, 0.3); }
+        .project-link.secondary { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #94a3b8; }
+        .project-link.secondary:hover { border-color: #60a5fa; color: #60a5fa; }
         footer { text-align: center; padding: 30px; color: #475569; font-size: 0.85rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
         @media (max-width: 640px) { section { padding: 60px 16px; } .nav-links { display: none; } }
     </style>
@@ -48,21 +62,58 @@
     <div class="content">
         <section id="projects">
             <h2 class="section-title"><span>项目展示</span></h2>
+            <p class="section-desc">专注于 LLM 应用开发，将 AI 技术落地为实际产品</p>
+
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card" style="--card-gradient: linear-gradient(90deg, #60a5fa, #3b82f6); --icon-bg: rgba(96, 165, 250, 0.15);">
+                    <div class="project-icon">📚</div>
                     <h3>ScholarClub</h3>
-                    <p>学术社区平台，支持论文分享、学术讨论和研究协作。</p>
-                    <div class="project-tags"><span>Python</span><span>FastAPI</span><span>RAG</span></div>
+                    <p>学术社区平台，为研究者提供论文分享、学术讨论和协作研究的一站式服务。</p>
+                    <ul class="project-features">
+                        <li>基于 RAG 的智能论文检索与问答</li>
+                        <li>多用户协作与讨论区</li>
+                        <li>论文摘要自动生成</li>
+                    </ul>
+                    <div class="project-tags">
+                        <span>Python</span>
+                        <span>FastAPI</span>
+                        <span>RAG</span>
+                        <span>LLM</span>
+                    </div>
                 </div>
-                <div class="project-card">
+
+                <div class="project-card" style="--card-gradient: linear-gradient(90deg, #a78bfa, #8b5cf6); --icon-bg: rgba(167, 139, 250, 0.15);">
+                    <div class="project-icon">🔍</div>
                     <h3>信息抽取平台</h3>
-                    <p>基于大模型的能力，对文章摘要，正文，相关文献进行信息抽取。</p>
-                    <div class="project-tags"><span>Python</span><span>React</span><span>TensorFlow</span></div>
+                    <p>基于大模型的智能信息抽取系统，从学术文献中自动提取结构化知识。</p>
+                    <ul class="project-features">
+                        <li>文章摘要与正文信息抽取</li>
+                        <li>相关文献关联分析</li>
+                        <li>结构化数据导出</li>
+                    </ul>
+                    <div class="project-tags">
+                        <span>Python</span>
+                        <span>LLM</span>
+                        <span>NLP</span>
+                        <span>信息抽取</span>
+                    </div>
                 </div>
-                <div class="project-card">
+
+                <div class="project-card" style="--card-gradient: linear-gradient(90deg, #34d399, #10b981); --icon-bg: rgba(52, 211, 153, 0.15);">
+                    <div class="project-icon">🤖</div>
                     <h3>Agent Store</h3>
-                    <p>文章阅读好帮手，覆盖多个文章相关的Agent，帮助学者进行文章阅读与理解</p>
-                    <div class="project-tags"><span>Node.js</span><span>Canvas</span><span>WebSocket</span></div>
+                    <p>文章阅读智能助手，集合多种 Agent 能力，帮助学者高效阅读和理解学术文献。</p>
+                    <ul class="project-features">
+                        <li>多 Agent 协同工作</li>
+                        <li>文章要点自动提取</li>
+                        <li>智能问答与摘要</li>
+                    </ul>
+                    <div class="project-tags">
+                        <span>Python</span>
+                        <span>Agent</span>
+                        <span>LangChain</span>
+                        <span>LLM</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -108,7 +159,7 @@
             document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
             init();
             const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.15 });
-            document.querySelectorAll('.section-title, .project-card').forEach(el => observer.observe(el));
+            document.querySelectorAll('.section-title, .section-desc, .project-card').forEach(el => observer.observe(el));
         })();
     </script>
 </body>
