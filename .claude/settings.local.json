@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(jupyter nbconvert *)",
-      "Bash(python convert_notebooks.py)"
+      "Bash(python convert_notebooks.py)",
+      "Bash(python)"
     ]
   }
 }

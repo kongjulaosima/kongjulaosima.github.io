@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -8311,22 +8310,22 @@ temperature 控制 softmax 输出概率分布的"尖锐程度"。调低 temperat
 <p><strong>【点击查看答案】</strong></p>
 </summary>
 <div style="margin-top: 10px;  padding: 15px;  border: 1px solid #dee2e6; border-radius: 0 0 6px 6px;">
-<h4 id="%F0%9F%8E%AF-%E5%9C%BA%E6%99%AFA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">🎯 场景A解决方案<a class="anchor-link" href="#%F0%9F%8E%AF-%E5%9C%BA%E6%99%AFA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">¶</a></h4><p><strong>🔍 原因分析</strong><br>
-<code>temperature</code> 值过低（如0.3），导致模型选择单一，生成内容缺乏多样性。</br></p>
+<h4 id="%F0%9F%8E%AF-%E5%9C%BA%E6%99%AFA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">🎯 场景A解决方案<a class="anchor-link" href="#%F0%9F%8E%AF-%E5%9C%BA%E6%99%AFA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">¶</a></h4><p><strong>🔍 原因分析</strong><br/>
+<code>temperature</code> 值过低（如0.3），导致模型选择单一，生成内容缺乏多样性。</p>
 <p><strong>⚙️ 参数调整</strong></p>
 <div class="highlight"><pre><span></span><span class="n">temperature</span> <span class="o">=</span> <span class="mf">0.7</span><span class="o">~</span><span class="mf">0.9</span>  <span class="c1"># 提升创意性</span>
 <span class="n">top_p</span> <span class="o">=</span> <span class="mf">0.9</span>            <span class="c1"># 增大选词范围</span>
 </pre></div>
-<h4 id="%F0%9F%8E%AF-%E5%9C%BA%E6%99%AFB%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">🎯 场景B解决方案<a class="anchor-link" href="#%F0%9F%8E%AF-%E5%9C%BA%E6%99%AFB%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">¶</a></h4><p><strong>🔍 原因分析</strong><br>
-<code>temperature</code> 过高（如1.2）或 <code>top_p</code> 过大</br></p>
+<h4 id="%F0%9F%8E%AF-%E5%9C%BA%E6%99%AFB%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">🎯 场景B解决方案<a class="anchor-link" href="#%F0%9F%8E%AF-%E5%9C%BA%E6%99%AFB%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">¶</a></h4><p><strong>🔍 原因分析</strong><br/>
+<code>temperature</code> 过高（如1.2）或 <code>top_p</code> 过大</p>
 <p><strong>⚙️ 参数调整</strong></p>
 <div class="highlight"><pre><span></span><span class="n">temperature</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">~</span><span class="mf">0.7</span>  <span class="c1"># 降低随机性</span>
 <span class="n">top_p</span> <span class="o">=</span> <span class="mf">0.7</span><span class="o">~</span><span class="mf">0.8</span>        <span class="c1"># 聚焦高概率词</span>
 </pre></div>
 <blockquote>
-<p>🌟 <strong>调参小技巧</strong><br>
+<p>🌟 <strong>调参小技巧</strong><br/>
 每次调整幅度建议 ±0.2，通过AB测试观察效果变化。
-如果需要兼顾场景A和场景B，推荐组合：<code>temperature=0.6</code> + <code>top_p=0.8</code></br></p>
+如果需要兼顾场景A和场景B，推荐组合：<code>temperature=0.6</code> + <code>top_p=0.8</code></p>
 </blockquote>
 </div>
 </details>
@@ -8368,28 +8367,7 @@ temperature 控制 softmax 输出概率分布的"尖锐程度"。调低 temperat
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="%E2%9C%85%E8%AF%84%E4%BB%B7%E5%8F%8D%E9%A6%88">✅评价反馈<a class="anchor-link" href="#%E2%9C%85%E8%AF%84%E4%BB%B7%E5%8F%8D%E9%A6%88">¶</a></h2><p>欢迎你参与<a href="https://survey.aliyun.com/apps/zhiliao/Mo5O9vuie">阿里云大模型ACP课程问卷</a> 反馈学习体验和课程评价。
-你的批评和鼓励都是我们前进的动力！</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-</div>
-</div>
-</div>
-</div>
+
 </main>
 </body>
 </html>
