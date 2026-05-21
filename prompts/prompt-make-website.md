@@ -1,20 +1,3 @@
-# deepseek-v4 技术报告网站
-
->
-> 
->
----
-
-## 00、配置 Claude code + 安装 huashu-design
-
----
-
-## 01、生成提示词
-
-我想基于 Claude Code 和 Huashu-design（./.agents/skills/huashu-design），通过提示词将 deepseek-v4 的技术报告，转换成一个网页，网页内容可参考 .bing/website-index.html。
-
-请给我简洁可用的提示词。
-
 ```markdown
 请使用 huashu-design skill，将 DeepSeek-V4 技术报告（pdf/DeepSeek_V4.pdf）转换成一个高质量的中文网页。
 
@@ -49,5 +32,3 @@
 - 数据必须准确，不确定的标注「论文未披露」
 ```
 
-
----
