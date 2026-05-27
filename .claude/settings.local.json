@@ -3,7 +3,10 @@
     "allow": [
       "Bash(jupyter nbconvert *)",
       "Bash(python convert_notebooks.py)",
-      "Bash(python)"
+      "Bash(python)",
+      "Bash(python -c ' *)",
+      "Bash(python3 -c ' *)",
+      "Bash(python *)"
     ]
   }
 }
